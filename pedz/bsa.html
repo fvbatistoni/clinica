@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from pedz.de/de/bsa.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:42 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" -->
+
+<div data-role="page" id="bsa" data-theme="a"> 
+
+
+   <script type="text/javascript" src="js/bsa.js"></script>
+   
+  <script type="text/javascript">
+ $( document ).delegate("#bsa", "pagebeforecreate", function() {
+		$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+$("#bsaFormula").find("input[type='radio']").bind("change", function() {
+	bsa_calc();
+});
+});
+
+
+</script>
+    <div data-role="header" data-theme="a">
+<h1 lang="en">Superfície Corporal</h1>
+  </div>
+  <div data-role="content" data-theme="a" >
+  
+  <div class="bodyWrapper">
+    <form name="bsa_form" id="bsa_form" action="#" method="post">
+   <table class="resultTableSmall">
+<colgroup>
+<col class="resultTableLabel">
+<col>
+</colgroup>
+    <tr><td>
+                <label for="bsa_height"><span lang="en">Estatura</span></label></td><td>          
+          <input type="number" placeholder="cm" onKeyUp="bsa_calc()" maxlength="3"  name="bsa_height" id="bsa_height" value=""  /></td></tr>
+          <tr><td>
+          <label for="bsa_height"><span lang="en">Peso</span></label></td><td>
+          <input type="number" placeholder="kg" onKeyUp="bsa_calc()" maxlength="4"   name="bsa_weight" id="bsa_weight" value=""  /></td></tr></table>
+            
+       <div class="resultDiv"><span lang="en">Superfície Corporal</span>:</strong>
+    <div id="bsa_bsa" >
+      </div></div>
+      
+        <div data-role="collapsible" class="ui-mini" data-content-theme="d">
+    <h3><span lang="en">Opções</span></h3>
+        <fieldset id="bsaFormula" data-role="controlgroup">
+        <legend><span lang="en">Método de Cálculo</span>:</legend>
+        <input name="bsaRadio" id="bsaRadioMosteller" value="on" checked="checked" type="radio">
+        <label for="bsaRadioMosteller">Mosteller</label>
+        <input name="bsaRadio" id="bsaRadioDuBois" value="off" type="radio">
+        <label for="bsaRadioDuBois">DuBois</label>
+    </fieldset>
+
+    </div>
+      
+    </form>
+    </div>
+  </div>
+  
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"></div>
+       <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Superfície Corporal de acordo com Mosteller (1987) ou DuBois (1916)</span></p>
+          <p><span lang="en">Escolha o Método de Cáculo nas <b>Opções</b></span></p>
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+<!-- InstanceEnd -->
+<!-- Mirrored from pedz.de/de/bsa.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:42 GMT -->
+</html>

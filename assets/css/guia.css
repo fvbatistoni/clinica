@@ -1,0 +1,246 @@
+<style type="text/css"> 
+.teste{
+	
+}
+@page {
+	size: 8.27in 11.69in; /* <length>{1,2} | auto | portrait | landscape */
+	      /* 'em' 'ex' and % are not allowed; length values are width height */
+	margin: 2%; /* <any of the usual CSS values for margins> */
+	             /*(% of page-box width for LR, of height for TB) */
+}
+.laterais {
+ 	border-left-style: solid;
+	border-left-color: #999999;
+	border-left-width: 2pt;	
+ 	border-right-style: solid;
+	border-right-color: #999999;
+	border-right-width: 2pt;
+}
+.top {
+ 	border-top-style: solid;
+	border-top-color: #999999;
+	border-top-width: 2pt;
+ 	border-left-style: solid;
+	border-left-color: #999999;
+	border-left-width: 2pt;	
+ 	border-right-style: solid;
+	border-right-color: #999999;
+	border-right-width: 2pt;
+}
+.embaixo {
+ 	border-left-style: solid;
+	border-left-color: #999999;
+	border-left-width: 2pt;	
+ 	border-right-style: solid;
+	border-right-color: #999999;
+	border-right-width: 2pt;
+	border-bottom-style: solid;
+	border-bottom-width: 2pt;
+	border-bottom-color: #999999;
+}
+		.celula_exame {
+			vertical-align: middle;
+			border-bottom-style: solid;
+			border-bottom-width: 1pt;
+			border-bottom-color: #999999;
+		}
+		
+		.celulas {
+			border-right-style: solid;
+			border-top-style: solid;
+			border-left-style: solid;
+			border-bottom-style: solid;
+			padding: 2pt 2pt 2pt 2pt;
+			vertical-align: top;
+			border-left-width: 1pt;
+			border-bottom-width: 1pt;
+			border-top-width: 1pt;
+			border-right-width: 1pt;
+			border-top-color: #999999;
+			border-bottom-color: #999999;
+			border-left-color: #999999;
+			border-right-color: #999999
+		}
+.largura100{
+			border-bottom-width: 1pt;
+			border-bottom-color: #999999;			
+}		
+body {
+ font-family: Arial, serif;
+}
+p {
+	font-family: "Arial", serif;
+}
+p.MsoAcetate, li.MsoAcetate, div.MsoAcetate {
+	font-size: 8.0pt;
+	font-family: "Arial", sans-serif;
+}
+span.MsoPlaceholderText {
+	color: black;
+	font-family: "Arial", sans-serif;
+	font-weight: bold;
+}
+p.MsoNoSpacing, li.MsoNoSpacing, div.MsoNoSpacing {
+	font-size: 7.5pt;
+	font-family: "Arial", sans-serif;
+}
+span.TextodebaloChar {
+	font-family: "Arial", sans-serif;
+}
+p.campoTitulo, li.campoTitulo, div.campoTitulo {
+	font-size: 7.5pt;
+	font-family: "Arial", sans-serif;
+	font-weight: bold;
+}
+p.campoTexto, li.campoTexto, div.campoTexto {
+	font-size: 8.0pt;
+	font-family: "Arial", sans-serif;
+}
+span.NormalWebChar {
+	font-family: "Arial", serif;
+}
+span.campoTituloChar {
+	font-family: "Arial", serif;
+}
+span.campoTextoChar {
+	font-family: "Arial", sans-serif;
+}
+.MsoPapDefault {
+	line-height: 115%;
+}
+.c15 {
+	border-right-style: solid;
+	padding: 5pt 5pt 5pt 5pt;
+	border-bottom-color: #999999;
+	border-top-width: 1pt;
+	border-right-width: 1pt;
+	border-left-color: #999999;
+	vertical-align: top;
+	border-right-color: #999999;
+	border-left-width: 1pt;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-bottom-width: 1pt;
+	width: 159.8pt;
+	border-top-color: #999999;
+	border-bottom-style: solid
+}
+.c19 {
+	border-right-style: solid;
+	padding: 5pt 5pt 5pt 5pt;
+	border-bottom-color: #999999;
+	border-top-width: 1pt;
+	border-right-width: 1pt;
+	border-left-color: #999999;
+	vertical-align: top;
+	border-right-color: #999999;
+	border-left-width: 1pt;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-bottom-width: 1pt;
+	width: 319.5pt;
+	border-top-color: #999999;
+	border-bottom-style: solid
+}
+.c40 {
+	border-right-style: solid;
+	padding: 5pt 5pt 5pt 5pt;
+	border-bottom-color: #999999;
+	border-top-width: 1pt;
+	border-right-width: 1pt;
+	border-left-color: #999999;
+	vertical-align: top;
+	border-right-color: #999999;
+	border-left-width: 1pt;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-bottom-width: 1pt;
+	width: 319.5pt;
+	border-top-color: #999999;
+	border-bottom-style: solid
+}
+.c14 {
+	border-right-style: solid;
+	padding: 5pt 5pt 5pt 5pt;
+	border-bottom-color: #999999;
+	border-top-width: 1pt;
+	border-right-width: 1pt;
+	border-left-color: #999999;
+	vertical-align: top;
+	border-right-color: #999999;
+	border-left-width: 1pt;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-bottom-width: 1pt;
+	width: 319.5pt;
+	border-top-color: #999999;
+	border-bottom-style: solid
+}
+.c4 {
+	color: #666666;
+	font-weight: 400;
+	text-decoration: none;
+	vertical-align: baseline;
+	font-size: 8pt;
+	font-family: "Calibri";
+	font-style: normal
+}
+.c10 {
+	color: #666666;
+	padding-top: 0pt;
+	padding-bottom: 0pt;
+	line-height: 1.0;
+	orphans: 2;
+	widows: 2;
+	text-align: left
+}
+.c5 {
+	padding-top: 0pt;
+	padding-bottom: 0pt;
+	line-height: 1.0;
+	orphans: 2;
+	widows: 2;
+	text-align: center
+}
+.c31 {
+	text-decoration: none;
+	vertical-align: baseline;
+	font-family: "Calibri";
+	font-style: normal
+}
+.c11 {
+	color: #666666;
+	font-size: 8pt
+}
+.c6 {
+	height: 11pt
+}
+.c29 {
+	height: 2pt
+}
+.c24 {
+	font-weight: 700
+}
+.c36 {
+	border-spacing: 0;
+	border-collapse: collapse;
+	margin-right: auto
+}
+.c20 {
+	border-right-style: solid;
+	padding: 5pt 5pt 5pt 5pt;
+	border-bottom-color: #999999;
+	border-top-width: 1pt;
+	border-right-width: 1pt;
+	border-left-color: #999999;
+	vertical-align: top;
+	border-right-color: #999999;
+	border-left-width: 1pt;
+	border-top-style: solid;
+	border-left-style: solid;
+	border-bottom-width: 1pt;
+	width: 159.8pt;
+	border-top-color: #999999;
+	border-bottom-style: solid
+}
+</style>

@@ -1,0 +1,12 @@
+@charset "utf-8";
+/* CSS Document */
+
+#header, #banhaut, #bas, #remove, #haut, #nav, #breadcrumb, #category_thumbnail_span, #category_thumbnail_span img, #category_thumbnail_image, #photo_edit_confirmation, #photo_edit_error, #red_text, #green_text, #category_thumbnail_title, #category_thumbnail_image, #category_thumbnail_span, #category_thumbnail_span, #message_success, #message_error, #cancel_button_30, #button_190, #gallery_footer {
+	display: none;
+}
+
+body, .print {
+	display: inline;
+	width: 100%;
+	height: auto;
+}

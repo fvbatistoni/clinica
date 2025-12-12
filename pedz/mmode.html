@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html><!-- InstanceBegin template="/Templates/header.dwt" codeOutsideHTMLIsLocked="false" -->
+
+<!-- Mirrored from pedz.de/de/mmode.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:42 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" --> 
+<!-- 
+Der QTC-Rechner
+-->
+
+<div data-role="page" id="mmode" data-theme="a">
+  <link href="mobiscroll.custom-2.5.0.min.css" rel="stylesheet" type="text/css" />
+  <script src="mobiscroll.custom-2.5.0.min.js" type="text/javascript"></script> 
+  <script src="mobiscroll.i18n.de.js" type="text/javascript"></script> 
+  <script type="text/javascript" src="js/mmode.js"></script> 
+  <script type="text/javascript" src="js/bsa.js"></script> 
+  <script type="text/javascript" src="js/z-values.js"></script> 
+  <script type="text/javascript">
+<!--
+ $( document ).delegate("#mmode", "pagebeforecreate", function() {
+		$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+	setStrings();
+	mmode_calc();
+	setDatePicker();
+	setCurrentDate("current");
+
+	$("#dateInput_flip").bind("change", function(event, ui) {
+		var dateInput = $("#dateInput_flip").val();
+			showDateInput(dateInput);
+			setDateInputStorage(dateInput);
+			mmode_calc();
+	});
+	
+		$("input[name^='date']").keyup(function() {
+  dateInputKeyUp($(this), "mmode");
+});
+
+	$("#radio").find("input[type='radio']").bind("change", function(){
+mmode_calc();
+});
+});
+
+$(function() {
+	var browserLang = getBrowserLanguage();
+
+	$('#birthday').mobiscroll().date({
+		theme: 'ios',
+		display: 'modal',
+		mode: 'scroller',
+		lang: browserLang,
+		dateOrder: 'ddMMyy',
+		onClose: function(html, inst) {
+			$("#birthday").val(html);
+			mmode_calc();
+		}
+	});
+	$('#currentdate').mobiscroll().date({
+		theme: 'ios',
+		display: 'modal',
+		mode: 'scroller',
+		lang: browserLang,
+		dateOrder: 'ddMMyy',
+		onClose: function(html, inst) {
+			$("#currentdate").val(html);
+			mmode_calc();
+		}
+	});
+});
+-->
+</script>
+    <div data-role="header" data-theme="a">
+<h1 lang="en">Z-scores Cardíacos</h1>
+  </div>
+  <div data-role="content" data-theme="a" >
+    <div class="bodyWrapper">
+      <form name="form" class="z-score-form" id="form" action="#" method="post">
+        <fieldset data-role="controlgroup" id="radio" data-type="horizontal" >
+          <input type="radio" name="radio" id="radio_male" value="male" checked="checked" />
+          <label for="radio_male"><span lang="en">Menino</span></label>
+          <input type="radio" name="radio" id="radio_female" value="female"  />
+          <label for="radio_female"><span lang="en">Menina</span></label>
+        </fieldset>
+        <div class="inputBox">
+          <div class="perfusorDiv">
+            <label for="weight"><span lang="en">Peso</span></label>
+            <input type="number" placeholder="kg" onKeyUp="mmode_calc()" maxlength="4"  name="weight" id="weight" value=""  />
+          </div>
+          <div class="perfusorDiv">
+            <label for="height"><span lang="en">Estatura</span></label>
+                     <input type="number" placeholder="cm" onKeyUp="mmode_calc()" maxlength="4" name="height" id="height" value=""  />
+          </div>
+          <div class="clearboth"></div>
+        </div>
+        <span lang="en" class="resultDiv">Superfície Corporal</span>
+        <div id="bsa_result"> </div>
+        <div id="headerResult"><span lang="en">mmode_calculated age</span>: <span id="mmode_calculatedAgeYears"></span> <span id="mmode_calculatedAgeMonthsUpper"></span>/ <span id="mmode_calculatedAgeMonthsLower">12</span> <span lang="en">years</span> </div>
+        <div data-role="collapsible" class="ui-mini" data-content-theme="d">
+          <h3><span lang="en">PLAX MMode</span></h3>
+          <ul class="zs-list">
+            <li id="li-Rvawd">
+              <div class="zs-box-left">
+                <label for="Rvawd"><span lang="en">RVAWd</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Rvawd" id="Rvawd" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupRvawd" id="btnRvawd" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupRvawd" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorRvawd" class="infoError"></div>
+                </p>
+                <div id="infoRvawd" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Rvawd_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Rvawd_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Rvawd_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Rvawd"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Rvdd">
+              <div class="zs-box-left">
+                <label for="Rvdd"><span lang="en">RVDD</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Rvdd" id="Rvdd" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupRvdd" id="btnRvdd" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupRvdd" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorRvdd" class="infoError"></div>
+                </p>
+                <div id="infoRvdd" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Rvdd_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Rvdd_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Rvdd_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Rvdd"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Ivsd">
+              <div class="zs-box-left">
+                <label for="Ivsd"><span lang="en">IVSd</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Ivsd" id="Ivsd" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupIvsd" id="btnIvsd" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupIvsd" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorIvsd" class="infoError"></div>
+                </p>
+                <div id="infoIvsd" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Ivsd_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Ivsd_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Ivsd_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Ivsd"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Ivss">
+              <div class="zs-box-left">
+                <label for="Ivss"><span lang="en">IVSs</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Ivss" id="Ivss" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupIvss" id="btnIvss" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupIvss" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorIvss" class="infoError"></div>
+                </p>
+                <div id="infoIvss" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Ivss_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Ivss_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Ivss_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Ivss"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Lvedd">
+              <div class="zs-box-left">
+                <label for="Lvedd"><span lang="en">LVEDD</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Lvedd" id="Lvedd" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupLvedd" id="btnLvedd" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupLvedd" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorLvedd" class="infoError"></div>
+                </p>
+                <div id="infoLvedd" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Lvedd_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Lvedd_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Lvedd_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Lvedd"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Lvesd">
+              <div class="zs-box-left">
+                <label for="Lvesd"><span lang="en">LVESD</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Lvesd" id="Lvesd" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupLvesd" id="btnLvesd" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupLvesd" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorLvesd" class="infoError"></div>
+                </p>
+                <div id="infoLvesd" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Lvesd_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Lvesd_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Lvesd_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Lvesd"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Lvpwd">
+              <div class="zs-box-left">
+                <label for="Lvpwd"><span lang="en">LVPWd</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Lvpwd" id="Lvpwd" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupLvpwd" id="btnLvpwd" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupLvpwd" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorLvpwd" class="infoError"></div>
+                </p>
+                <div id="infoLvpwd" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Lvpwd_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Lvpwd_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Lvpwd_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Lvpwd"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Lvpws">
+              <div class="zs-box-left">
+                <label for="Lvpws"><span lang="en">LVPWs</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Lvpws" id="Lvpws" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupLvpws" id="btnLvpws" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupLvpws" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorLvpws" class="infoError"></div>
+                </p>
+                <div id="infoLvpws" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Lvpws_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Lvpws_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Lvpws_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Lvpws"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li></ul>
+    
+              <span lang="en" class="resultDiv">FS %: </span> <div id="FS"></div>
+              
+        </div>
+        
+    
+        <div data-role="collapsible" class="ui-mini" data-content-theme="d">
+          <h3><span lang="en">Valvas</span></h3>
+          <ul class="zs-list">
+            <li id="li-Pv">
+              <div class="zs-box-left">
+                <label for="Pv"><span lang="en">PULMONAR</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Pv" id="Pv" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupPv" id="btnPv" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupPv" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorPv" class="infoError"></div>
+                </p>
+                <div id="infoPv" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Pv_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Pv_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Pv_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Pv"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Aov">
+              <div class="zs-box-left">
+                <label for="Aov"><span lang="en">AÓRTICA</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Aov" id="Aov" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupAov" id="btnAov" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupAov" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorAov" class="infoError"></div>
+                </p>
+                <div id="infoAov" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Aov_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Aov_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Aov_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Aov"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Mv">
+              <div class="zs-box-left">
+                <label for="Mv"><span lang="en">MITRAL</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Mv" id="Mv" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupMv" id="btnMv" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupMv" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorMv" class="infoError"></div>
+                </p>
+                <div id="infoMv" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Mv_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Mv_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Mv_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Mv"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Tv">
+              <div class="zs-box-left">
+                <label for="Tv"><span lang="en">TRICÚSPIDE</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Tv" id="Tv" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupTv" id="btnTv" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupTv" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorTv" class="infoError"></div>
+                </p>
+                <div id="infoTv" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Tv_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Tv_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Tv_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Tv"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+          </ul>
+        </div>
+        <div data-role="collapsible" class="ui-mini" data-content-theme="d">
+          <h3><span lang="en">Artéria Pulmonar</span></h3>
+          <ul class="zs-list">
+            <li id="li-Mpa">
+              <div class="zs-box-left">
+                <label for="Mpa"><span lang="en">MPA</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Mpa" id="Mpa" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupMpa" id="btnMpa" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupMpa" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorMpa" class="infoError"></div>
+                </p>
+                <div id="infoMpa" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Mpa_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Mpa_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Mpa_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Mpa"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Lpa">
+              <div class="zs-box-left">
+                <label for="Lpa"><span lang="en">LPA</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Lpa" id="Lpa" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupLpa" id="btnLpa" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupLpa" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorLpa" class="infoError"></div>
+                </p>
+                <div id="infoLpa" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Lpa_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Lpa_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Lpa_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Lpa"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Rpa">
+              <div class="zs-box-left">
+                <label for="Rpa"><span lang="en">RPA</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Rpa" id="Rpa" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupRpa" id="btnRpa" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupRpa" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorRpa" class="infoError"></div>
+                </p>
+                <div id="infoRpa" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Rpa_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Rpa_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Rpa_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Rpa"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+          </ul>
+        </div>
+        <div data-role="collapsible" class="ui-mini" data-content-theme="d">
+          <h3><span lang="en">Aorta</span></h3>
+          <ul class="zs-list">
+            <li id="li-Anulus">
+              <div class="zs-box-left">
+                <label for="Anulus"><span lang="en">Anulus</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Anulus" id="Anulus" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupAnulus" id="btnAnulus" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupAnulus" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorAnulus" class="infoError"></div>
+                </p>
+                <div id="infoAnulus" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Anulus_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Anulus_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Anulus_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Anulus"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Sov">
+              <div class="zs-box-left">
+                <label for="Sov"><span lang="en">SoV</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Sov" id="Sov" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupSov" id="btnSov" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupSov" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorSov" class="infoError"></div>
+                </p>
+                <div id="infoSov" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Sov_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Sov_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Sov_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Sov"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Stj">
+              <div class="zs-box-left">
+                <label for="Stj"><span lang="en">STJ</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Stj" id="Stj" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupStj" id="btnStj" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupStj" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorStj" class="infoError"></div>
+                </p>
+                <div id="infoStj" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Stj_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Stj_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Stj_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Stj"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Aao">
+              <div class="zs-box-left">
+                <label for="Aao"><span lang="en">Asc. Ao</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Aao" id="Aao" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupAao" id="btnAao" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupAao" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorAao" class="infoError"></div>
+                </p>
+                <div id="infoAao" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Aao_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Aao_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Aao_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Aao"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Taa">
+              <div class="zs-box-left">
+                <label for="Taa"><span lang="en">Transv. arch</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Taa" id="Taa" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupTaa" id="btnTaa" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupTaa" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorTaa" class="infoError"></div>
+                </p>
+                <div id="infoTaa" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Taa_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Taa_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Taa_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Taa"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Isthmus">
+              <div class="zs-box-left">
+                <label for="Isthmus"><span lang="en">Isthmus</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Isthmus" id="Isthmus" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupIsthmus" id="btnIsthmus" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupIsthmus" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorIsthmus" class="infoError"></div>
+                </p>
+                <div id="infoIsthmus" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Isthmus_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Isthmus_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Isthmus_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Isthmus"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Distarch">
+              <div class="zs-box-left">
+                <label for="Distarch"><span lang="en">Distal arch</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Distarch" id="Distarch" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupDistarch" id="btnDistarch" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupDistarch" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorDistarch" class="infoError"></div>
+                </p>
+                <div id="infoDistarch" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Distarch_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Distarch_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Distarch_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Distarch"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Dao">
+              <div class="zs-box-left">
+                <label for="Dao"><span lang="en">Desc. Ao</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Dao" id="Dao" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupDao" id="btnDao" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupDao" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorDao" class="infoError"></div>
+                </p>
+                <div id="infoDao" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Dao_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Dao_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Dao_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Dao"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+          </ul>
+        </div>
+        <div data-role="collapsible" class="ui-mini" data-content-theme="d">
+          <h3><span lang="en">Coronárias</span></h3>
+          <ul class="zs-list">
+            <li id="li-Lmca">
+              <div class="zs-box-left">
+                <label for="Lmca"><span lang="en">LMCA</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Lmca" id="Lmca" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupLmca" id="btnLmca" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupLmca" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorLmca" class="infoError"></div>
+                </p>
+                <div id="infoLmca" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Lmca_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Lmca_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Lmca_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Lmca"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Lad">
+              <div class="zs-box-left">
+                <label for="Lad"><span lang="en">LAD</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Lad" id="Lad" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupLad" id="btnLad" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupLad" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorLad" class="infoError"></div>
+                </p>
+                <div id="infoLad" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Lad_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Lad_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Lad_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Lad"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Cx">
+              <div class="zs-box-left">
+                <label for="Cx"><span lang="en">Cx</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Cx" id="Cx" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupCx" id="btnCx" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupCx" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorCx" class="infoError"></div>
+                </p>
+                <div id="infoCx" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Cx_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Cx_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Cx_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Cx"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Rcaprox">
+              <div class="zs-box-left">
+                <label for="Rcaprox"><span lang="en">RCAprox</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Rcaprox" id="Rcaprox" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupRcaprox" id="btnRcaprox" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupRcaprox" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorRcaprox" class="infoError"></div>
+                </p>
+                <div id="infoRcaprox" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Rcaprox_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Rcaprox_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Rcaprox_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Rcaprox"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Rcamed">
+              <div class="zs-box-left">
+                <label for="Rcamed"><span lang="en">RCAmed</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Rcamed" id="Rcamed" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupRcamed" id="btnRcamed" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupRcamed" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorRcamed" class="infoError"></div>
+                </p>
+                <div id="infoRcamed" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Rcamed_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Rcamed_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Rcamed_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Rcamed"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Rcadist">
+              <div class="zs-box-left">
+                <label for="Rcadist"><span lang="en">RCAdist</span></label>
+                <input type="number" placeholder="mm" onKeyUp="mmode_calc()" maxlength="4"  name="Rcadist" id="Rcadist" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupRcadist" id="btnRcadist" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupRcadist" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorRcadist" class="infoError"></div>
+                </p>
+                <div id="infoRcadist" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Rcadist_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Rcadist_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Rcadist_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Rcadist"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+          </ul>
+        </div>
+        <div data-role="collapsible" class="ui-mini" data-content-theme="d">
+          <h3><span lang="en">Função LV/RV</span></h3>
+          <div id="dateInputMobile">
+            <div class="pedzDate">
+              <label  for="birthday"><span lang="en">Data de Nascimento</span></label>
+              <input name="birthday" id="birthday">
+            </div>
+            <div class="pedzDate">
+              <label for="currentdate" ><span lang="en">Data Atual</span></label>
+              <input name="currentdate" id="currentdate"  >
+            </div>
+          </div>
+          <div id="dateInputDesktop">
+            <div class="pedzDate">
+              <label for="birth_d"><span lang="en">Data de Nascimento</span></label>
+              <div class="pedZDateInput">
+                <input type="text" maxlength="2"  name="date_birth_d" id="birth_d" value="" placeholder="DD" />
+              </div>
+              <div class="pedZDateInput">
+                <input type="text" maxlength="2"  name="date_birth_m" id="birth_m" value=""  placeholder="MM"/>
+              </div>
+              <div class="pedZDateInput">
+                <input type="text" maxlength="4"  name="date_birth_y" id="birth_y" value="" placeholder="YYYY" />
+              </div>
+            </div>
+            <div class="pedzDate">
+              <label for="current_d"><span lang="en">Data Atual</span> </label>
+              <div class="pedZDateInput">
+                <input type="text" maxlength="2"  name="date_current_d" id="current_d" value="" placeholder="DD" />
+              </div>
+              <div class="pedZDateInput">
+                <input type="text" maxlength="2"  name="date_current_m" id="current_m" value="" placeholder="MM" />
+              </div>
+              <div class="pedZDateInput">
+                <input type="text" maxlength="4"  name="date_current_y" id="current_y" value="" placeholder="YYYY"/>
+              </div>
+            </div>
+          </div>
+          <ul class="zs-list">
+            <li id="li-Mapse">
+              <div class="zs-box-left">
+                <label for="Mapse"><span lang="en">MAPSE</span></label>
+                <input type="number" placeholder="cm" onKeyUp="mmode_calc()" maxlength="4"  name="Mapse" id="Mapse" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupMapse" id="btnMapse" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupMapse" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorMapse" class="infoError"></div>
+                </p>
+                <div id="infoMapse" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Mapse_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Mapse_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Mapse_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Mapse"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Tapse">
+              <div class="zs-box-left">
+                <label for="Tapse"><span lang="en">TAPSE</span></label>
+                <input type="number" placeholder="cm" onKeyUp="mmode_calc()" maxlength="4"  name="Tapse" id="Tapse" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupTapse" id="btnTapse" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupTapse" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorTapse" class="infoError"></div>
+                </p>
+                <div id="infoTapse" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Tapse_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Tapse_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Tapse_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Tapse"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Tapsv">
+              <div class="zs-box-left">
+                <label for="Tapsv"><span lang="en">TAPSV</span></label>
+                <input type="number" placeholder="cm/s" onKeyUp="mmode_calc()" maxlength="4"  name="Tapsv" id="Tapsv" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupTapsv" id="btnTapsv" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupTapsv" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorTapsv" class="infoError"></div>
+                </p>
+                <div id="infoTapsv" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Tapsv_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Tapsv_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Tapsv_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Tapsv"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            <li id="li-Mapsv">
+              <div class="zs-box-left">
+                <label for="Mapsv"><span lang="en">MAPSV</span></label>
+                <input type="number" placeholder="cm/s" onKeyUp="mmode_calc()" maxlength="4"  name="Mapsv" id="Mapsv" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupMapsv" id="btnMapsv" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupMapsv" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorMapsv" class="infoError"></div>
+                </p>
+                <div id="infoMapsv" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Mapsv_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Mapsv_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Mapsv_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Mapsv"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+          </ul>
+        </div>
+        </ul>
+        
+         <div data-role="collapsible" class="ui-mini" data-content-theme="d">
+          <h3><span lang="en">LV Strain</span></h3>
+          <ul class="zs-list">
+            <li id="li-Basalcs">
+              <div class="zs-box-left">
+                <label for="Basalcs"><span lang="en">Basal CS</span></label>
+                <input type="number" placeholder="%" onKeyUp="mmode_calc()" maxlength="4"  name="Basalcs" id="Basalcs" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupBasalcs" id="btnBasalcs" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupBasalcs" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorBasalcs" class="infoError"></div>
+                </p>
+                <div id="infoBasalcs" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Basalcs_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Basalcs_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Basalcs_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Basalcs"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            
+         <li id="li-Midcs">
+              <div class="zs-box-left">
+                <label for="Midcs"><span lang="en">Mid CS</span></label>
+                <input type="number" placeholder="%" onKeyUp="mmode_calc()" maxlength="4"  name="Midcs" id="Midcs" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupMidcs" id="btnMidcs" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupMidcs" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorMidcs" class="infoError"></div>
+                </p>
+                <div id="infoMidcs" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Midcs_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Midcs_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Midcs_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Midcs"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            
+         <li id="li-Apicalcs">
+              <div class="zs-box-left">
+                <label for="Apicalcs"><span lang="en">Apical CS</span></label>
+                <input type="number" placeholder="%" onKeyUp="mmode_calc()" maxlength="4"  name="Apicalcs" id="Apicalcs" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupApicalcs" id="btnApicalcs" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupApicalcs" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorApicalcs" class="infoError"></div>
+                </p>
+                <div id="infoApicalcs" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Apicalcs_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Apicalcs_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Apicalcs_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Apicalcs"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+          
+           <li id="li-Meanls">
+              <div class="zs-box-left">
+                <label for="Meanls"><span lang="en">LS</span></label>
+                <input type="number" placeholder="%" onKeyUp="mmode_calc()" maxlength="4"  name="Meanls" id="Meanls" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupMeanls" id="btnMeanls" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupMeanls" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorMeanls" class="infoError"></div>
+                </p>
+                <div id="infoMeanls" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Meanls_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Meanls_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Meanls_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Meanls"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            
+            
+          </ul>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+  <div data-role="popup" id="outputPopup" class="ui-content" style="max-width:500px"> <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Fechar</a>
+    <textarea id="outputContent"></textarea>
+  </div>
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"><a href="#outputPopup" data-rel="popup" class="ui-btn ui-icon-comment ui-btn-icon-left ui-corner-all ui-shadow ui-btn-inline"><span lang="en">Saída</span></a></div>
+          <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Z-Scores para Ecocardiografia Pediátrica de acordo com</span>:
+          
+          <ul>
+            <li>Gautier et al. 2010</li>
+<li>Kampmann et al. 2000</li>
+<li>Zilberman et al. 2005</li>
+<li>Peterssen et al. 2008</li>
+<li>Dallaire et al. 2011</li>
+<li>Koestenberger et. al 2009, 2012, 2012, 2014</li>
+          </ul>
+          </p>
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+<!-- InstanceEnd -->
+
+</html>

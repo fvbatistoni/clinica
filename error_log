@@ -1,0 +1,169 @@
+[28-Oct-2022 17:36:54 America/Fortaleza] PHP Warning:  DOMDocument::loadHTMLFile(): htmlParseStartTag: invalid element name in uploads/agendas/2022-10-28-agenda.htm, line: 507 in /home2/pediatria/public_html/clinica/processa_agenda_no_db.php on line 14
+[16-Feb-2023 16:23:39 America/Fortaleza] PHP Warning:  mysqli::mysqli(): (08004/1040): Too many connections in /home2/pediatria/public_html/clinica/DB.class.php on line 37
+[24-Feb-2023 10:44:58 America/Fortaleza] PHP Warning:  mysqli_connect(): (HY000/1040): Too many connections in /home2/pediatria/public_html/database/DB.php on line 39
+[27-Feb-2023 08:59:33 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 08:59:36 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 08:59:37 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 08:59:40 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 09:16:05 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 09:20:13 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 10:49:06 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 10:49:38 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 12:28:17 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 12:43:41 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[27-Feb-2023 12:43:47 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[28-Feb-2023 09:46:30 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[28-Feb-2023 09:47:19 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[28-Feb-2023 09:47:21 America/Fortaleza] PHP Warning:  require_once(..//home2/pediatria/public_html/clinica/loader.php): failed to open stream: No such file or directory in /home2/pediatria/public_html/clinica/header.php on line 2
+[28-Feb-2023 09:47:21 America/Fortaleza] PHP Fatal error:  require_once(): Failed opening required '..//home2/pediatria/public_html/clinica/loader.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home2/pediatria/public_html/clinica/header.php on line 2
+[28-Feb-2023 09:47:23 America/Fortaleza] PHP Warning:  require_once(..//home2/pediatria/public_html/clinica/loader.php): failed to open stream: No such file or directory in /home2/pediatria/public_html/clinica/header.php on line 2
+[28-Feb-2023 09:47:23 America/Fortaleza] PHP Fatal error:  require_once(): Failed opening required '..//home2/pediatria/public_html/clinica/loader.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home2/pediatria/public_html/clinica/header.php on line 2
+[28-Feb-2023 12:59:38 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[01-Mar-2023 06:22:04 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[03-Mar-2023 12:20:44 America/Fortaleza] PHP Fatal error:  Uncaught Error: [] operator not supported for strings in /home2/pediatria/public_html/database/DB.php:109
+Stack trace:
+#0 /home2/pediatria/public_html/model/Controle.php(56): DB->fetchAll()
+#1 /home2/pediatria/public_html/model/Site.php(37): Controle->select('site')
+#2 /home2/pediatria/public_html/clinica/login.php(18): Site->getMeta()
+#3 {main}
+  thrown in /home2/pediatria/public_html/database/DB.php on line 109
+[30-Mar-2023 04:32:00 America/Fortaleza] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /home2/pediatria/public_html/clinica/prescricaoView.php on line 112
+[30-Mar-2023 04:32:04 America/Fortaleza] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /home2/pediatria/public_html/clinica/prescricaoView.php on line 112
+[30-Mar-2023 04:32:06 America/Fortaleza] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /home2/pediatria/public_html/clinica/prescricaoView.php on line 112
+[30-Mar-2023 04:32:15 America/Fortaleza] PHP Parse error:  syntax error, unexpected 'version' (T_STRING) in /home2/pediatria/public_html/clinica/prescricaoView.php on line 112
+[18-Apr-2023 08:20:17 America/Fortaleza] PHP Parse error:  syntax error, unexpected ';' in /home2/pediatria/public_html/clinica/reciboAction.php on line 42
+[18-Apr-2023 08:20:50 America/Fortaleza] PHP Parse error:  syntax error, unexpected ';' in /home2/pediatria/public_html/clinica/reciboAction.php on line 42
+[18-Apr-2023 08:34:18 America/Fortaleza] PHP Parse error:  syntax error, unexpected ';' in /home2/pediatria/public_html/clinica/reciboAction.php on line 43
+[18-Apr-2023 08:40:42 America/Fortaleza] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home2/pediatria/public_html/clinica/reciboAction.php on line 44
+[18-Apr-2023 08:52:53 America/Fortaleza] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home2/pediatria/public_html/clinica/reciboPainel.php on line 250
+[18-Apr-2023 08:53:34 America/Fortaleza] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home2/pediatria/public_html/clinica/reciboPainel.php on line 250
+[18-Apr-2023 08:53:37 America/Fortaleza] PHP Parse error:  syntax error, unexpected '' (T_ENCAPSED_AND_WHITESPACE), expecting '-' or identifier (T_STRING) or variable (T_VARIABLE) or number (T_NUM_STRING) in /home2/pediatria/public_html/clinica/reciboPainel.php on line 250
+[19-Apr-2023 04:17:59 America/Fortaleza] PHP Parse error:  syntax error, unexpected 'blob' (T_STRING) in /home2/pediatria/public_html/clinica/reciboPainel.php on line 285
+[26-Jul-2023 12:40:15 America/Fortaleza] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 94
+[26-Jul-2023 12:40:15 America/Fortaleza] PHP Warning:  count(): Parameter must be an array or an object that implements Countable in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 94
+[26-Jul-2023 12:45:42 America/Fortaleza] PHP Parse error:  syntax error, unexpected ';', expecting '(' in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 107
+[26-Jul-2023 12:46:04 America/Fortaleza] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function DB::getdespesasAll(), 0 passed in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 111 and exactly 1 expected in /home2/pediatria/public_html/clinica/DB.class.php:105
+Stack trace:
+#0 /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php(111): DB->getdespesasAll()
+#1 {main}
+  thrown in /home2/pediatria/public_html/clinica/DB.class.php on line 105
+[26-Jul-2023 12:46:09 America/Fortaleza] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function DB::getdespesasAll(), 0 passed in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 111 and exactly 1 expected in /home2/pediatria/public_html/clinica/DB.class.php:105
+Stack trace:
+#0 /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php(111): DB->getdespesasAll()
+#1 {main}
+  thrown in /home2/pediatria/public_html/clinica/DB.class.php on line 105
+[26-Jul-2023 12:47:02 America/Fortaleza] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function DB::getdespesasAll(), 0 passed in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 107 and exactly 1 expected in /home2/pediatria/public_html/clinica/DB.class.php:105
+Stack trace:
+#0 /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php(107): DB->getdespesasAll()
+#1 {main}
+  thrown in /home2/pediatria/public_html/clinica/DB.class.php on line 105
+[26-Jul-2023 12:48:16 America/Fortaleza] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function DB::getdespesasAll(), 0 passed in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 107 and exactly 1 expected in /home2/pediatria/public_html/clinica/DB.class.php:105
+Stack trace:
+#0 /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php(107): DB->getdespesasAll()
+#1 {main}
+  thrown in /home2/pediatria/public_html/clinica/DB.class.php on line 105
+[26-Jul-2023 12:48:27 America/Fortaleza] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function DB::getdespesasAll(), 0 passed in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 107 and exactly 1 expected in /home2/pediatria/public_html/clinica/DB.class.php:105
+Stack trace:
+#0 /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php(107): DB->getdespesasAll()
+#1 {main}
+  thrown in /home2/pediatria/public_html/clinica/DB.class.php on line 105
+[26-Jul-2023 12:49:11 America/Fortaleza] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function DB::getdespesasAll(), 0 passed in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 107 and exactly 1 expected in /home2/pediatria/public_html/clinica/DB.class.php:105
+Stack trace:
+#0 /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php(107): DB->getdespesasAll()
+#1 {main}
+  thrown in /home2/pediatria/public_html/clinica/DB.class.php on line 105
+[26-Jul-2023 12:49:50 America/Fortaleza] PHP Fatal error:  Uncaught ArgumentCountError: Too few arguments to function DB::getdespesasAll(), 0 passed in /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php on line 107 and exactly 1 expected in /home2/pediatria/public_html/clinica/DB.class.php:105
+Stack trace:
+#0 /home2/pediatria/public_html/clinica/financeiro_movimentoAddEdit.php(107): DB->getdespesasAll()
+#1 {main}
+  thrown in /home2/pediatria/public_html/clinica/DB.class.php on line 105

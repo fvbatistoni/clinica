@@ -1,0 +1,118 @@
+body
+{
+	font-family: arial;
+}
+h2
+{
+	margin-top: 1em;
+	font-size: 80%;
+	padding: 0.2em;
+	font-weight: normal;
+	font-size: large;
+	color: white;
+	background-color: #A1B0C2;
+}
+h2:first-of-type
+{
+	margin-top: 0;
+}
+h2 a {
+    /* color: white; */
+    text-decoration: none;
+}
+table
+{
+	font-size: 100%;
+	font-family: arial;
+	width: 100%;
+}
+table th
+{
+	text-align: left;
+	font-weight: normal;
+	font-style: italic;
+	color: #888;
+}
+table tbody tr
+{
+	vertical-align: top;
+}
+table tbody > :nth-child(even)
+{
+	/* background-color: #EAEAEA; */
+	background-color: #E9F0F4;
+}
+.table2
+{
+    margin-top: 0.5em;
+}
+div.reference
+{
+	border-top: thin solid #999;
+	margin-top: 1em;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+	padding-top: 2em;
+	font-size: 60%;
+	color: #999;
+	background: -webkit-gradient(linear, left top, left bottom, from(#EEE), color-stop(0.1, #FFF));
+	font-style: italic;
+}
+div.reference-header
+{
+	font-style: normal;
+}
+.label
+{
+	font-style: italic;
+	color: #666;
+}
+div.label
+{
+	text-align: left;
+	float: left;
+    margin-left: 0.2em;
+	margin-right: 1em;
+}
+div.value
+{
+	text-align: right;
+	padding-bottom: 0.2em;
+	border-bottom: 1px solid #CCC;
+	margin-bottom: 0.2em;
+    margin-right: 0.2em;
+}
+div.value ul
+{
+	clear: both;
+	text-align: left;
+}
+p {
+	clear: both;
+	text-align: left;
+    margin-left: 0.2em;
+}
+div.info
+{
+	background-color: #FF9;
+	margin-top: 1em;
+    margin-bottom: 1em;
+	padding: 1em;
+	/* border-radius: 30px; */
+	text-align: center;
+}
+div.warning
+{
+	color: white;
+	background-color: red;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding: 1em;
+	font-weight: bold;
+	border-radius: 30px;
+}
+div.weight-used
+{
+	text-align: center;
+	font-weight: bold;
+}

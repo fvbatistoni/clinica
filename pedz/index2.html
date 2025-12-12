@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="pedz/jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="pedz/jquery.mobile.icons.min.css" />
+<script src="pedz/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="pedz/jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="pedz/Pedz.min.css" />
+<script src="pedz/jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="pedz/langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="pedz/langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="pedz/js/common.js" type="text/javascript"></script>
+<link href="pedz/rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" -->
+<div data-role="page" id="startpage" data-theme="a"> 
+  <script type="text/javascript">
+ 
+  
+ function onBackKeyDown(e) {
+    e.preventDefault();
+    window.history.go(-1);
+}
+
+function onPageChange() {
+    if(window.location.hash != "#/") {
+        // add our event listener for sub pages, this will allow us
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    } else {
+        // remove the event listener so the back button will exit the app
+        document.removeEventListener("backbutton", onBackKeyDown, false);
+    }
+}
+
+
+$( document ).delegate("#startpage", "pagebeforecreate", function() {
+		$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+	
+	// Get latest view status an set toggle switch
+	if (checkLocalStorageSupport()) {
+		var view = localStorage.getItem("view");
+	if (view == "grid") {
+		$("#index_flip").val("grid");
+				$("#indexList").css("display","none");
+		$("#indexGrid").css("display","block");
+		centerGrid();
+	}
+	}
+	
+	
+	$("#index_flip").bind("change", function(event, ui) {
+	if ($("#index_flip").val() == "list") {
+		$("#indexList").css("display","block");
+		$("#indexGrid").css("display","none");
+		if (checkLocalStorageSupport())
+		 localStorage.setItem("view","list");
+	}
+	else {
+		$("#indexList").css("display","none");
+		$("#indexGrid").css("display","block");
+		centerGrid();
+		if (checkLocalStorageSupport())
+		localStorage.setItem("view","grid");
+	}
+});
+	});
+
+
+	
+	
+$(window).resize(function () {
+	centerGrid();
+});
+
+function centerGrid () {
+		// centering the grid
+	var winwidth = $(window).width();
+	//alert(winwidth);
+	$("#indexGrid").css("padding-left",(winwidth-40)%(80+10)/2);
+}
+
+
+
+</script>
+  <div data-role="header" data-theme="a" >
+    <h1 lang="en">Ped(z) - Calculadora Pediátrica</h1>
+  </div>
+  <div data-role="content">
+    <div class="bodyWrapper">
+      <form id="index_form" name="index_form" method="post">
+        <select name="index_flip" id="index_flip" data-mini="true" data-role="slider">
+          <option value="list" lang="en">Lista</option>
+          <option value="grid" lang="en">Ícones</option>
+        </select>
+      </form>
+      <ul id="indexList" data-role="listview" data-inset="true">
+        <li data-role="list-divider" data-theme="a"><span lang="en">Pediatria Geral</span></li>
+        <li data-theme="c"><a href="pedz/bmi.html" data-ajax="false" ><img src="pedz/icons/bmi.png" />
+          <h3><span lang="en">PediTools (Percentis Corporais)</span></h3>
+          <p><span lang="en">Peso, Estatura e mais</span></p>
+          </a></li>
+        <li data-theme="c"><a href="pedz/mph.html" data-ajax="false" ><img src="pedz/icons/mph.png" />
+          <h3><span lang="en">Estatura-Alvo</span></h3>
+          <p><span lang="en">Estimated target height</span></p>
+          </a></li>
+        <li data-role="list-divider" data-theme="a"><span lang="en">Neonatologia</span></li>
+        <li data-theme="c"><a href="pedz/neo.html"  data-ajax="false"><img src="pedz/icons/neo.png" />
+          <h3><span lang="en">Percentis de nascimento</span></h3>
+          <p><span lang="en">De acordo com Voigt ou Fenton</span> </p>
+          </a></li>
+        <li data-theme="c"><a href="pedz/gestation.html"  data-ajax="false"><img src="pedz/icons/gestation.png" />
+          <h3><span lang="en">Idade Gestacional</span></h3>
+          <p><span lang="en">Semanas de gestação</span></p>
+          </a></li>
+        <li data-theme="c"><a href="pedz/bili.html" data-ajax="false"><img src="pedz/icons/bili.png" />
+          <h3><span lang="en">Hiperbilirubinemia</span></h3>
+          <p><span lang="en">Threshold for phototherapy and exchange transfusion</span></p>
+          </a></li>
+        <li data-role="list-divider" data-theme="a"><span lang="en">Dose</span></li>
+        <li data-theme="c"><a href="pedz/bsa.html"  data-ajax="false"><img src="pedz/icons/bsa.png" />
+          <h3><span lang="en">Superfície Corporal</span></h3>
+          <p><span lang="en">Mosteller or DuBois</span></p>
+          </a></li>
+        <li data-theme="c"><a href="pedz/perfusor.html"  data-ajax="false"><img src="pedz/icons/perfusor.png" />
+          <h3><span lang="en">Perfusor</span></h3>
+          <p><span lang="en">Para bombas de infusão</span></p>
+          </a></li>
+        <li data-role="list-divider" data-theme="a"><span lang="en">Cardiologia</span></li>
+        <li data-theme="c"><a href="pedz/qtc.html"  data-ajax="false"><img src="pedz/icons/qtc.png" />
+          <h3><span lang="en">Calcular QTc</span></h3>
+          <p><span lang="en">Corrected QT interval</span></p>
+          </a></li>
+        <li data-theme="c"><a href="pedz/bp.html"  data-ajax="false"><img src="pedz/icons/bp.png" />
+          <h3><span lang="en">Pressão Arterial</span></h3>
+          <p><span lang="en">Percentis de Pressão Arterial</span></p>
+          </a></li>
+        <li data-theme="c"><a href="pedz/mmode.html"  data-ajax="false"><img src="pedz/icons/mmode.png" />
+          <h3><span lang="en">Cardiac z-scores</span></h3>
+          <p><span lang="en">For pediatric echocardiography</span></p>
+          </a></li>
+        <li data-theme="c"><a href="pedz/ecg.html"  data-ajax="false"><img src="pedz/icons/ecg.png" />
+          <h3><span lang="en">ECG</span></h3>
+          <p><span lang="en">From Park/Guntheroth</span></p>
+          </a></li>
+        <li data-theme="c"><a href="pedz/fetal.html"  data-ajax="false"><img src="pedz/icons/fetal.png" />
+          <h3><span lang="en">Fetal z-scores</span></h3>
+          <p><span lang="en">For prenatal echo</span></p>
+          </a></li>
+        <li data-role="list-divider" data-theme="a"><span lang="en">Pneumologia</span></li>
+        <li data-theme="c"><a href="pedz/spiro.html"  data-ajax="false"><img src="pedz/icons/spiro.png" />
+          <h3><span lang="en">Espirometria</span></h3>
+          <p><span lang="en">From 3 to 95 years</span></p>
+          </a></li>
+        <li data-role="list-divider" data-theme="a"><span lang="en">Pediatric Sonography</span></li>
+        <li data-theme="c"><a href="pedz/kidney.html"  data-ajax="false"><img src="pedz/icons/kidney.png" />
+          <h3><span lang="en">Percentis Renais</span></h3>
+          <p><span lang="en">For volume and length</span></p>
+          </a></li>
+      </ul>
+      <ul  id="indexGrid">
+        <li><a href="pedz/bmi.html"  data-ajax="false"><img src="pedz/icons/bmi.png" width="80" height="80" alt="bmi"></a>
+          <h3><span lang="en">PediTools</span></h3>
+        </li>
+        <li><a href="pedz/mph.html"  data-ajax="false"><img src="pedz/icons/mph.png" width="80" height="80" alt="mph"></a>
+          <h3><span lang="en">Estatura-Alvo</span></h3>
+        </li>
+        <li><a href="pedz/neo.html"  data-ajax="false"><img src="pedz/icons/neo.png" width="80" height="79" alt="neo"></a>
+          <h3><span lang="en">Neonatal</span></h3>
+        </li>
+        <li><a href="pedz/gestation.html"  data-ajax="false"><img src="pedz/icons/gestation.png" width="80" height="80" alt="gestation"></a>
+          <h3><span lang="en">Idade Gestacional</span></h3>
+        </li>
+        <li><a href="pedz/bili.html"  data-ajax="false"><img src="pedz/icons/bili.png" width="80" height="80" alt="bili"></a>
+          <h3><span lang="en">Bilirrubina</span></h3>
+        </li>
+        <li><a href="pedz/bsa.html"  data-ajax="false"><img src="pedz/icons/bsa.png" width="80" height="80" alt="bsa"></a>
+          <h3><span lang="en">Superfície</span></h3>
+        </li>
+        <li><a href="pedz/perfusor.html"  data-ajax="false"><img src="pedz/icons/perfusor.png" width="80" height="80" alt="perfusor"></a>
+          <h3>Perfusor</h3>
+        </li>
+        <li><a href="pedz/qtc.html"  data-ajax="false"><img src="pedz/icons/qtc.png" width="80" height="80" alt="qtc"></a>
+          <h3>QTc</h3>
+        </li>
+        <li><a href="pedz/bp.html"  data-ajax="false"><img src="pedz/icons/bp.png" width="80" height="80" alt="bp"></a>
+          <h3><span lang="en">Pressão Arterial</span></h3>
+        </li>
+        <li><a href="pedz/mmode.html"  data-ajax="false"><img src="pedz/icons/mmode.png" alt="mmode"></a>
+          <h3>Cardiac Z</h3>
+        </li>
+        <li><a href="pedz/ecg.html"  data-ajax="false"><img src="pedz/icons/ecg.png" width="80" height="80" alt="ecg"></a>
+          <h3>ECG</h3>
+        </li>
+        <li><a href="pedz/fetal.html"  data-ajax="false"><img src="pedz/icons/fetal.png" width="80" height="80" alt="qtc"></a>
+          <h3><span lang="en">Fetal Z</span></h3>
+        </li>
+        <li><a href="pedz/spiro.html"  data-ajax="false"><img src="pedz/icons/spiro.png" width="80" height="80" alt="spiro"></a>
+          <h3><span lang="en">Espirometria</span></h3>
+        </li>
+        <li><a href="pedz/kidney.html"  data-ajax="false"><img src="pedz/icons/kidney.png" alt="kidney"></a>
+          <h3>Nefro</h3>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

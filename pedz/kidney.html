@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html><!-- InstanceBegin template="/Templates/header.dwt" codeOutsideHTMLIsLocked="false" -->
+
+<!-- Mirrored from pedz.de/de/kidney.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:41 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" --> 
+
+<!-----------------------------------
+Nieren Perzentilen
+------------------------------------->
+<div data-role="page" id="kidney" data-theme="a"> 
+  <script type="text/javascript" src="js/z-values.js"></script> 
+  <script type="text/javascript" src="js/kidney.js"></script> 
+   <script type="text/javascript" src="js/bsa.js"></script> 
+   
+  <script type="text/javascript">
+<!--
+ $( document ).delegate("#kidney", "pagebeforecreate", function() {
+		$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+	setStrings();
+});
+-->
+</script>
+    <div data-role="header" data-theme="a">
+<h1 lang="en">Kidney</h1>
+  </div>
+  <div data-role="content" data-theme="a" >
+  
+  <div class="bodyWrapper">
+    <form name="kidney_form" id="kidney_form" action="#" method="post">
+        <div class="inputBox">
+          <div class="perfusorDiv">
+            <label for="weight"><span lang="en">Peso</span></label>
+            <input type="number" placeholder="kg" onKeyUp="kidney_calc()" maxlength="4"  name="weight" id="weight" value=""  />
+          </div>
+          <div class="perfusorDiv">
+            <label for="height"><span lang="en">Estatura</span></label>
+            </td>
+            <input type="number" placeholder="cm" onKeyUp="kidney_calc()" maxlength="4" name="height" id="height" value=""  />
+          </div>
+          <div class="clearboth"></div>
+        </div>
+        <span lang="en" class="resultDiv">Superfície Corporal</span>
+        <div id="bsa_result"> </div>
+        
+  <ul class="zs-list">
+            <li id="li-Kidneylength">
+              <div class="zs-box-left">
+                <label for="Kidneylength"><span lang="en">Comprimento do Rim</span></label>
+                <input type="number" placeholder="mm" onKeyUp="kidney_calc()" maxlength="4"  name="Kidneylength" id="Kidneylength" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupKidneylength" id="btnKidneylength" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupKidneylength" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorKidneylength" class="infoError"></div>
+                </p>
+                <div id="infoKidneylength" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Kidneylength_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Kidneylength_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Kidneylength_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Kidneylength"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            
+             <li id="li-Kidneyvolume">
+              <div class="zs-box-left">
+                <label for="Kidneyvolume"><span lang="en">Volume Renal</span></label>
+                <input type="number" placeholder="mm" onKeyUp="kidney_calc()" maxlength="4"  name="Kidneyvolume" id="Kidneyvolume" data-mini="true" value=""  />
+              </div>
+              <div class="zs-box-right"> <a href="#popupKidneyvolume" id="btnKidneyvolume" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+              <div data-role="popup" id="popupKidneyvolume" class="ui-content" data-theme="a" style="max-width:350px;">
+                <p class="zscoreinfo">
+                <div id="errorKidneyvolume" class="infoError"></div>
+                </p>
+                <div id="infoKidneyvolume" class="zscoreinfo"></div>
+              </div>
+              <div class="zs-box-center">
+                <div class="zs-diagram">
+                  <div class="zs-baseline">
+                    <div class="zs-lln-marker">
+                      <div class="zs-lln-value">
+                        <div id="Kidneyvolume_lln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-uln-marker">
+                      <div class="zs-uln-value">
+                        <div id="Kidneyvolume_uln"></div>
+                      </div>
+                    </div>
+                    <div class="zs-mean-marker">
+                      <div class="zs-mean-value">
+                        <div id="Kidneyvolume_mean"></div>
+                      </div>
+                    </div>
+                    <div class="zs-result-marker">
+                      <div class="zs-result-value">
+                        <div id="sds_Kidneyvolume"></div>
+                      </div>
+                    </div>
+                    <div class="zs-arrow-left"></div>
+                    <div class="zs-arrow-right"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="clearboth"></div>
+            </li>
+            
+            </ul>
+            
+    </form>
+  </div>
+  </div>
+   <div data-role="popup" id="outputPopup" class="ui-content" style="max-width:500px"> <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Fechar</a>
+    <textarea id="outputContent"></textarea>
+  </div>
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"><a href="#outputPopup" data-rel="popup" class="ui-btn ui-icon-comment ui-btn-icon-left ui-corner-all ui-shadow ui-btn-inline"><span lang="en">Saída</span></a></div>
+         <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Percentis de Comprimento e Volume Renais de acordo com</span>:
+          
+          <ul>
+            <li>Deeg, Weitzel et al.: <em>Die Ultraschalluntersuchung des Kindes</em>, Springer-Verlag, Berlin, Heidelberg u. a., 1997</li>
+<li>Scholbach, Weizel: <em>Body-Surface-Area Related Renal Volume: A Common Range from Birth to Adulthood</em>, Scientifica 2012</li>
+          </ul>
+          </p>
+         
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+<!-----------------------------------
+Ende: Nieren
+-------------------------------------> 
+
+
+</body>
+<!-- InstanceEnd -->
+<!-- Mirrored from pedz.de/de/kidney.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:41 GMT -->
+</html>

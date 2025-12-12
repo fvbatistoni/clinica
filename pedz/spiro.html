@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from pedz.de/de/spiro.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:42 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" --> 
+<!-- 
+Der QTC-Rechner
+-->
+
+<div data-role="page" id="spiro" data-theme="a"> 
+ <link href="mobiscroll.custom-2.5.0.min.css" rel="stylesheet" type="text/css" />
+  <script src="mobiscroll.custom-2.5.0.min.js" type="text/javascript"></script> 
+  <script src="mobiscroll.i18n.de.js" type="text/javascript"></script> 
+  <script type="text/javascript" src="js/spiro.js"></script> 
+  <script type="text/javascript" src="js/bsa.js"></script> 
+    <script type="text/javascript" src="js/z-values.js"></script> 
+  <script type="text/javascript">
+<!--
+
+ $( document ).delegate("#spiro", "pagebeforecreate", function() {
+		$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+	setStrings();
+	spiro_calc();
+	setDatePicker();
+	setCurrentDate("spiro_current");
+
+	$("#dateInput_flip").bind("change", function(event, ui) {
+		var dateInput = $("#dateInput_flip").val();
+			showDateInput(dateInput);
+			setDateInputStorage(dateInput);
+			spiro_calc();
+	});
+	
+		$("input[name^='spiro_date']").keyup(function() {
+  dateInputKeyUp($(this), "spiro");
+});
+
+	$("#spiro_radio").find("input[type='radio']").bind("change", function(){
+spiro_calc();
+});
+	$("#spiro_ethnics_radio").find("input[type='radio']").bind("change", function() {
+		spiro_calc();
+	});
+});
+
+$(function() {
+	var browserLang = getBrowserLanguage();
+
+	$('#spiro_birthday').mobiscroll().date({
+		theme: 'ios',
+		display: 'modal',
+		mode: 'scroller',
+		lang: browserLang,
+		dateOrder: 'ddMMyy',
+		onClose: function(html, inst) {
+			$("#spiro_birthday").val(html);
+			spiro_calc();
+		}
+	});
+	$('#spiro_currentdate').mobiscroll().date({
+		theme: 'ios',
+		display: 'modal',
+		mode: 'scroller',
+		lang: browserLang,
+		dateOrder: 'ddMMyy',
+		onClose: function(html, inst) {
+			$("#spiro_currentdate").val(html);
+			spiro_calc();
+		}
+	});
+});
+-->
+</script>
+   <div data-role="header" data-theme="a">
+<h1 lang="en">Espirometria Z-scores</h1>
+  </div>
+  <div data-role="content" data-theme="a" >
+    <div class="bodyWrapper">
+      <form name="spiro_form" class="z-score-form" id="spiro_form" action="#" method="post">
+        <fieldset data-role="controlgroup" id="spiro_radio" data-type="horizontal" >
+          <input type="radio" name="spiro_radio" id="spiro_radio_male" value="male" checked="checked" />
+          <label for="spiro_radio_male"><span lang="en">Menino</span></label>
+          <input type="radio" name="spiro_radio" id="spiro_radio_female" value="female"  />
+          <label for="spiro_radio_female"><span lang="en">Menina</span></label>
+        </fieldset>
+        <div class="inputBox">
+             
+      <label for="spiro_height"><span lang="en">Estatura</span></label></td>
+          <input type="number" placeholder="cm" onKeyUp="spiro_calc()" maxlength="4" name="spiro_height" id="spiro_height" value=""  />
+            
+         <div class="clearboth"></div>
+         </div>
+    
+            <div id="dateInputMobile">
+          <div class="pedzDate">
+            <label  for="spiro_birthday"><span lang="en">Data de Nascimento</span></label>
+            <input name="spiro_birthday" id="spiro_birthday">
+          </div>
+          <div class="pedzDate">
+            <label for="spiro_currentdate" ><span lang="en">Data Atual</span></label>
+            <input name="spiro_currentdate" id="spiro_currentdate"  >
+          </div>
+        </div>
+        
+        <div id="dateInputDesktop">
+          <div class="pedzDate">
+            <label for="spiro_birth_d"><span lang="en">Data de Nascimento</span></label>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="2"  name="spiro_date_birth_d" id="spiro_birth_d" value="" placeholder="DD" />
+            </div>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="2"  name="spiro_date_birth_m" id="spiro_birth_m" value=""  placeholder="MM"/>
+            </div>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="4"  name="spiro_date_birth_y" id="spiro_birth_y" value="" placeholder="YYYY" />
+            </div>
+          </div>
+          <div class="pedzDate">
+            <label for="spiro_current_d"><span lang="en">Data Atual</span> </label>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="2"  name="spiro_date_current_d" id="spiro_current_d" value="" placeholder="DD" />
+            </div>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="2"  name="spiro_date_current_m" id="spiro_current_m" value="" placeholder="MM" />
+            </div>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="4"  name="spiro_date_current_y" id="spiro_current_y" value="" placeholder="YYYY"/>
+            </div>
+          </div>
+        </div>
+              
+        <div id="headerResult"><span lang="en">Idade Calculada</span>: <span id="calculatedAgeYears"></span> <span lang="en">years</span> </div>
+         <div data-role="collapsible" class="ui-mini" data-content-theme="d">
+          <h3><span lang="en">Opções</span></h3>
+          <div data-role="fieldcontain">
+            <fieldset data-role="controlgroup" id="spiro_ethnics_radio" data-type="vertical" >
+            <legend lang="en">Ethnics</legend>
+              <input type="radio" name="spiro_ethnics_radio" id="spiro_radio_white" value="white" checked="checked" />
+              <label for="spiro_radio_white"><span lang="en">White</span></label>       
+              <input type="radio" name="spiro_ethnics_radio" id="spiro_radio_black" value="black"  />
+              <label for="spiro_radio_black"><span lang="en">Black</span></label>
+   			  <input type="radio" name="spiro_ethnics_radio" id="spiro_radio_neasis" value="neasia"  />
+              <label for="spiro_radio_neasis"><span lang="en">North east asia</span></label>  
+              <input type="radio" name="spiro_ethnics_radio" id="spiro_radio_seasis" value="seasia"  />
+              <label for="spiro_radio_seasis"><span lang="en">South east asia</span></label> 
+              	  <input type="radio" name="spiro_ethnics_radio" id="spiro_radio_other" value="other" />
+              <label for="spiro_radio_other"><span lang="en">Other</span></label>             
+            </fieldset>
+            
+         
+          </div>
+                 <div class="bmi_flip_div">
+            <label for="dateInput_flip"><span lang="en">Método de data</span></label>
+            <select name="dateInput_flip" id="dateInput_flip" data-mini="true" data-role="slider">
+              <option value="desktop" lang="en">Desktop</option>
+              <option value="mobile" lang="en">Celular</option>
+            </select>
+          </div>
+          </div>
+        
+    
+        
+        <ul class="zs-list">
+          <li id="li-fev1">
+            <div class="zs-box-left">
+              <label for="spiro_fev1">FEV<sub>1</sub></label>
+              <input type="number" placeholder="l" onKeyUp="spiro_calc()" maxlength="4"  name="spiro_fev1" id="spiro_fev1" data-mini="true" value=""  />
+            </div>
+         <div class="zs-box-right"> <a href="#popupFev1" id="btnFev1" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupFev1" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorFev1" class="infoError"></div></p>
+              <div id="infoFev1" class="zscoreinfo"></div>     
+            </div>
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="spiro_fev1_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="spiro_fev1_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="spiro_fev1_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="spiro_sds_fev1"></div>
+                    </div>
+                          <div class="zs-result-perc-value">
+                      <div id="spiro_percentile_fev1"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+   
+        <li id="li-fvc">
+            <div class="zs-box-left">
+              <label for="spiro_fvc"><span lang="en">FVC</span></label>
+              <input type="number" placeholder="l" onKeyUp="spiro_calc()" maxlength="4"  name="spiro_fvc" id="spiro_fvc" data-mini="true" value=""  />
+            </div>
+         <div class="zs-box-right"> <a href="#popupFvc" id="btnFvc" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupFvc" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorFvc" class="infoError"></div></p>
+              <div id="infoFvc" class="zscoreinfo"></div>     
+            </div>
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="spiro_fvc_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="spiro_fvc_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="spiro_fvc_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="spiro_sds_fvc"></div>
+                    </div>
+                          <div class="zs-result-perc-value">
+                      <div id="spiro_percentile_fvc"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+            <li id="li-fev1fvc">
+            <div class="zs-box-left">
+              <label for="spiro_fev1fvc">FEV<sub>1</sub>/FVC</label>
+              <input type="number" readonly placeholder="1/s" onKeyUp="spiro_calc()" maxlength="4"  name="spiro_fev1fvc" id="spiro_fev1fvc" data-mini="true" value=""  />
+            </div>
+         <div class="zs-box-right"> <a href="#popupFev1fvc" id="btnFev1fvc" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupFev1fvc" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorFev1fvc" class="infoError"></div></p>
+              <div id="infoFev1fvc" class="zscoreinfo"></div>     
+            </div>
+
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="spiro_fev1fvc_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="spiro_fev1fvc_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="spiro_fev1fvc_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="spiro_sds_fev1fvc"></div>
+                    </div>
+                          <div class="zs-result-perc-value">
+                      <div id="spiro_percentile_fev1fvc"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+            <li id="li-fef2575">
+            <div class="zs-box-left">
+              <label for="spiro_fef2575">FEF<sub><small>25-75</small></sub></label>
+              <input type="number" placeholder="l/s" onKeyUp="spiro_calc()" maxlength="4"  name="spiro_fef2575" id="spiro_fef2575" data-mini="true" value=""  />
+            </div>
+                <div class="zs-box-right"> <a href="#popupFef2575" id="btnFef2575" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupFef2575" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorFef2575" class="infoError"></div></p>
+              <div id="infoFef2575" class="zscoreinfo"></div>     
+            </div>
+
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="spiro_fef2575_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="spiro_fef2575_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="spiro_fef2575_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="spiro_sds_fef2575"></div>
+                    </div>
+                          <div class="zs-result-perc-value">
+                      <div id="spiro_percentile_fef2575"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+            <li id="li-fef75">
+            <div class="zs-box-left">
+              <label for="spiro_fef75">FEF<sub>75</sub></label>
+              <input type="number" placeholder="l/s" onKeyUp="spiro_calc()" maxlength="4"  name="spiro_fef75" id="spiro_fef75" data-mini="true" value=""  />
+            </div>
+                <div class="zs-box-right"> <a href="#popupFef75" id="btnFef75" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupFef75" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorFef75" class="infoError"></div></p>
+              <div id="infoFef75" class="zscoreinfo"></div>     
+            </div>
+
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="spiro_fef75_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="spiro_fef75_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="spiro_fef75_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="spiro_sds_fef75"></div>
+                    </div>
+                          <div class="zs-result-perc-value">
+                      <div id="spiro_percentile_fef75"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+               <li id="li-fev075">
+            <div class="zs-box-left">
+              <label for="spiro_fev075">FEV<sub>075</sub></label>
+              <input type="number" placeholder="l" onKeyUp="spiro_calc()" maxlength="4"  name="spiro_fev075" id="spiro_fev075" data-mini="true" value=""  />
+            </div>
+           <div class="zs-box-right"> <a href="#popupFev075" id="btnFev075" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupFev075" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorFev075" class="infoError"></div></p>
+              <div id="infoFev075" class="zscoreinfo"></div>     
+            </div>
+
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="spiro_fev075_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="spiro_fev075_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="spiro_fev075_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="spiro_sds_fev075"></div>
+                    </div>
+                          <div class="zs-result-perc-value">
+                      <div id="spiro_percentile_fev075"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+               <li id="li-fev075fvc">
+            <div class="zs-box-left">
+              <label for="spiro_fev075fvc">FEV<sub>075</sub>/FVC</label>
+              <input type="number" readonly placeholder="1/s" onKeyUp="spiro_calc()" maxlength="4"  name="spiro_fev075fvc" id="spiro_fev075fvc" data-mini="true" value=""  />
+            </div>
+            <div class="zs-box-right"> <a href="#popupFev075fvc" id="btnFev075fvc" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupFev075fvc" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorFev075fvc" class="infoError"></div></p>
+              <div id="infoFev075fvc" class="zscoreinfo"></div>     
+            </div>
+
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="spiro_fev075fvc_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="spiro_fev075fvc_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="spiro_fev075fvc_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="spiro_sds_fev075fvc"></div>
+                    </div>
+                          <div class="zs-result-perc-value">
+                      <div id="spiro_percentile_fev075fvc"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+        
+ </ul>
+ 
+ 
+        </ul>
+        
+      </form>
+    </div>
+  </div>
+ 
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"></div>
+           <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Z-scores de Espirometria de acordo com</span>:
+          
+          <ul>
+            <li>Quanjer, P.H. et al. 2012</li>
+          </ul>
+          </p>
+          <p><span lang="en">Escolha o Método de Cálculo nas <b>Opções</b></span></p>
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+</body>
+<!-- InstanceEnd -->
+
+</html>

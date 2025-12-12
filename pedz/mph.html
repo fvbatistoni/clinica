@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from pedz.de/de/mph.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:40 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" -->
+
+<div data-role="page" id="mph" data-theme="a"> 
+
+   <script type="text/javascript" src="js/mph.js"></script>
+      <script type="text/javascript" src="js/bmi.js"></script>
+       <script type="text/javascript" src="js/z-values.js"></script> 
+ 
+ 
+<script type="text/javascript">
+<!--
+ $( document ).delegate("#mph", "pagebeforecreate", function() {
+		$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+	
+		$("#mph_prefer_radio").find("input[type='radio']").bind("change", function() {
+		mph_calc();
+	});
+
+$("#mph_radio").find("input[type='radio']").bind("change", function(){
+mph_calc(); 
+});
+});
+
+
+
+-->
+</script>
+   <div data-role="header" data-theme="a">
+<h1 lang="en">Estatura-Alvo</h1>
+  </div>
+  <div data-role="content" data-theme="a">
+  <div class="bodyWrapper">
+    <form name="mph_form" id="mph_form" action="#" method="post">
+      <fieldset data-role="controlgroup" id="mph_radio" data-type="horizontal">
+        <input type="radio" name="mph_radio" id="mph_radio_male" value="male" checked="checked" />
+        <label for="mph_radio_male"><span lang="en">Menino</span></label>
+        <input type="radio" name="mph_radio" id="mph_radio_female" value="female"/>
+        <label for="mph_radio_female"><span lang="en">Menina</span></label>
+      </fieldset>
+      
+          <ul class="zs-list">
+          <li id="li-fatherheight">
+            <div class="mph-box-left">
+              <label for="mph_fatherheight"><span lang="en">Estatura do Pai</span></label>
+              <input type="number" placeholder="cm" data-mini="true" onKeyUp="mph_calc()" maxlength="6"  name="mph_fatherheight" id="mph_fatherheight" value=""  />
+            </div>
+            <div class="mph-box-right"><div id="fatherHeight"></div>
+            </div>
+              <div class="clearboth"></div>       
+          </li>
+          
+           <li id="li-motherheight">
+            <div class="mph-box-left">
+              <label for="mph_motherheight"><span lang="en">Estatura da Mãe</span></label>
+              <input type="number" placeholder="cm" data-mini="true" onKeyUp="mph_calc()" maxlength="6"  name="mph_motherheight" id="mph_motherheight" value=""  />
+            </div>
+            <div class="mph-box-right"><div id="motherHeight"></div>
+            </div>
+              <div class="clearboth"></div>       
+          </li>     
+          </ul>
+          
+               <div data-role="collapsible" data-mini="true">
+          <h4><span lang="en">Opções</span></h4>
+          
+            <fieldset data-role="controlgroup" id="mph_prefer_radio" data-type="vertical" >
+            <legend><span lang="en">Escolha o país</span>:</legend>
+              <input type="radio" name="mph_prefer_radio" id="mph_prefer_argentina" value="Argentina" />
+              <label for="mph_prefer_argentina"><span lang="en">Argentina</span></label>
+                           <input type="radio" name="mph_prefer_radio" id="mph_prefer_Belgium" value="Belgium" />
+              <label for="mph_prefer_Belgium"><span lang="en">Bélgica</span></label>
+               <input type="radio" name="mph_prefer_radio" id="mph_prefer_Germany" value="Germany" />
+              <label for="mph_prefer_Germany"><span lang="en">Alemanha</span></label>
+                           <input type="radio" name="mph_prefer_radio" id="mph_prefer_Italy" value="Italy" />
+              <label for="mph_prefer_Italy"><span lang="en">Itália</span></label>
+                           <input type="radio" name="mph_prefer_radio" id="mph_prefer_Poland" value="Poland" />
+              <label for="mph_prefer_Poland"><span lang="en">Polônia</span></label>
+                           <input type="radio" name="mph_prefer_radio" id="mph_prefer_Sweden" value="Sweden" />
+              <label for="mph_prefer_Sweden"><span lang="en">Suécia</span></label>
+                           <input type="radio" name="mph_prefer_radio" id="mph_prefer_Switzerland" value="Switzerland" />
+              <label for="mph_prefer_Switzerland"><span lang="en">Suiça</span></label>
+                           <input type="radio" name="mph_prefer_radio" id="mph_prefer_UK" value="UK" />
+              <label for="mph_prefer_UK"><span lang="en">Reino Unido</span></label>
+              <!--  <input type="radio" name="mph_prefer_radio" id="mph_prefer_USA" value="USA" />
+              <label for="mph_prefer_USA"><span lang="en">USA</span></label>-->
+                           <input type="radio" name="mph_prefer_radio" id="mph_prefer_WHO" value="WHO" checked="checked" />
+              <label for="mph_prefer_WHO"><span lang="en">OMS</span></label>
+             
+            </fieldset>
+          
+          </div>     
+
+            <div class="mph-box">
+              <span lang="en">Estatura Alvo</span> (cm):</div>
+          
+            <div class="mph-box"><div id="mph_targetHeight"></div></div>
+              <div class="mph-infobox"> <a href="#mphInfo" data-rel="popup" data-role="button" class="ui-icon-alt mmodeInfoButton" data-inline="true" data-transition="pop" data-icon="info" data-theme="c" data-iconpos="notext" onclick="formatBmiInfo('weight')">Info</a> </div>
+            <div data-role="popup" id="mphInfo" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><span lang="en">Estatura-Alvo de acordo com</span> <i>Hermanussen et al.: Auxology; Schweizerbart 2013</i></p> <p class="zscoreinfo"><span lang="en">National growth references according to</span></b>: <b><span lang="en">Argenina</span></b>: <i>Lejarraga et al. 2009</i>; <b><span lang="en">Belgium</span></b>: <i>Roelants et al. 2009</i>; <b><span lang="en">Alemanha</span></b>: <i>Kromeyer-Hausschild et al. 2001</i>; <b><span lang="en">Italy</span></b>: <i>Cacciari et al. 2006</i>; <b><span lang="en">Poland</span></b>: <i>Albertsson-Wikland et al. 2002, He et al. 2000</i>; <b><span lang="en">Switzerland</span></b>: <i>Prader et al. 1989</i>; <b><span lang="en">UK</span></b>: <i>Freeman et al. 1995</i>; <b><span lang="en">WHO</span></b>: <i>WHO Reference 2007</i>; <b><span lang="en">USA</span></b>: <i>CDC Growth Charts 2000</i></p>
+              <p class="zscoreinfo"><span lang="en">The values in braces represent the 95% confidence interval. Escolha o país nas <b>Opções</b></span></p>
+             
+            </div>
+             <div class="clearboth"></div>
+        
+              </form>
+      </div>
+  </div>
+  
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"></div>
+           <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Estatura esperada para meninos e meninas de acordo com</span>:
+          
+          <ul>
+            <li>Hermanussen et al 2003</li>
+          </ul>
+          </p>
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+</body>
+<!-- InstanceEnd -->
+<!-- Mirrored from pedz.de/de/mph.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:41 GMT -->
+</html>

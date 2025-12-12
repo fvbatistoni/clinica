@@ -1,0 +1,17 @@
+{
+    "name": "fvvat/clinica",
+    "autoload": {
+        "psr-4": {
+            "Fvvat\\Clinica\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fabricio",
+            "email": "fvbatistoni@gmail.com"
+        }
+    ],
+    "require": {
+        "mpdf/mpdf": "8.2"
+    }
+}

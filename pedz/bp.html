@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from pedz.de/de/bp.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:38 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" -->
+<div data-role="page" id="bp" data-theme="a">
+  <link href="mobiscroll.custom-2.5.0.min.css" rel="stylesheet" type="text/css" />
+  <script src="mobiscroll.custom-2.5.0.min.js" type="text/javascript"></script> 
+  <script src="mobiscroll.i18n.de.js" type="text/javascript"></script> 
+  <script type="text/javascript" src="js/z-values.js"></script> 
+  <script type="text/javascript" src="js/bp.js"></script> 
+   <script type="text/javascript" src="js/bmi-data.js"></script>
+   <script type="text/javascript" src="js/bmi.js"></script> 
+  <script type="text/javascript">
+<!--
+$(document).delegate("#bp", "pagebeforecreate", function() {
+	$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+
+	$("#bp_radio").find("input[type='radio']").bind("change", function() {
+		bp_calc();
+	});
+		$("#bp_prefer_radio").find("input[type='radio']").bind("change", function() {
+		bp_calc();
+	});
+	
+	setDatePicker();
+	setStrings();
+setCurrentDate("bp_current");
+
+	$("#dateInput_flip").bind("change", function(event, ui) {
+		var dateInput = $("#dateInput_flip").val();
+			showDateInput(dateInput);
+			setDateInputStorage(dateInput);
+			bp_calc();
+	});
+
+	
+	$("input[name^='bp_date']").keyup(function() {
+  dateInputKeyUp($(this), "bp");
+	});
+	
+	});
+
+$(function() {
+	var browserLang = getBrowserLanguage();
+
+	$('#bp_birthday').mobiscroll().date({
+		theme: 'ios',
+		display: 'modal',
+		mode: 'scroller',
+		lang: browserLang,
+		dateOrder: 'ddMMyy',
+		onClose: function(html, inst) {
+			$("#bp_birthday").val(html);
+			bp_calc();
+		}
+	});
+	$('#bp_currentdate').mobiscroll().date({
+		theme: 'ios',
+		display: 'modal',
+		mode: 'scroller',
+		lang: browserLang,
+		dateOrder: 'ddMMyy',
+		onClose: function(html, inst) {
+			$("#bp_currentdate").val(html);
+			bp_calc();
+		}
+	});
+});
+-->
+</script>
+    <div data-role="header" data-theme="a">
+<h1 lang="en">Pressão Arterial</h1>
+  </div>
+  <div data-role="content" data-theme="a" >
+    <div class="bodyWrapper">
+      <form name="bp_form" id="bp_form" action="#" method="post">
+        <fieldset data-role="controlgroup" id="bp_radio" data-type="horizontal" >
+          <input type="radio" name="bp_radio" id="bp_radio_male" value="male" checked="checked" />
+          <label for="bp_radio_male"><span lang="en">Menino</span></label>
+          <input type="radio" name="bp_radio" id="bp_radio_female" value="female"  />
+          <label for="bp_radio_female"><span lang="en">Menina</span></label>
+        </fieldset>
+           <div id="dateInputMobile">
+          <div class="pedzDate">
+            <label  for="bp_birthday"><span lang="en">Data de Nascimento</span></label>
+            <input name="bp_birthday" id="bp_birthday">
+          </div>
+          <div class="pedzDate">
+            <label for="bp_currentdate" ><span lang="en">Data Atual</span></label>
+            <input name="bp_currentdate" id="bp_currentdate"  >
+          </div>
+        </div>
+        
+        <div id="dateInputDesktop">
+          <div class="pedzDate">
+            <label for="bp_birth_d"><span lang="en">Data de Nascimento</span></label>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="2"  name="bp_date_birth_d" id="bp_birth_d" value="" placeholder="DD" />
+            </div>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="2"  name="bp_date_birth_m" id="bp_birth_m" value=""  placeholder="MM"/>
+            </div>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="4"  name="bp_date_birth_y" id="bp_birth_y" value="" placeholder="YYYY" />
+            </div>
+          </div>
+          <div class="pedzDate">
+            <label for="bp_current_d"><span lang="en">Data Atual</span> </label>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="2"  name="bp_date_current_d" id="bp_current_d" value="" placeholder="DD" />
+            </div>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="2"  name="bp_date_current_m" id="bp_current_m" value="" placeholder="MM" />
+            </div>
+            <div class="pedZDateInput">
+              <input type="text" maxlength="4"  name="bp_date_current_y" id="bp_current_y" value="" placeholder="YYYY"/>
+            </div>
+          </div>
+        </div>
+        
+             <div class="inputBox">
+                   <label for="bp_height"><span lang="en">Estatura</span></label></td>
+          <input type="number" placeholder="cm" onKeyUp="bp_calc()" maxlength="4" name="bp_height" id="bp_height" value=""  />
+                 <div class="clearboth"></div>
+         </div>
+    
+                <div id="headerResult"><span lang="en">Estatura</span>: <span id="heightPercentile"></span>. P. | <span lang="en">Idade Calculada</span>: <span id="calculatedAgeYears"></span> <span id="calculatedAgeMonthsUpper"></span>/ <span id="calculatedAgeMonthsLower">12</span> <span lang="en">years</span></div>
+         
+           <div data-role="collapsible" class="ui-mini" data-mini="true" data-content-theme="d">
+          <h3><span lang="en">Opções</span></h3>
+       
+          
+                   <div data-role="fieldcontain">
+            <fieldset data-role="controlgroup" id="bp_prefer_radio" data-type="vertical" >
+              <input type="radio" name="bp_prefer_radio" id="bp_radio_kiggs" value="kiggs" checked="checked" />
+              <label for="bp_radio_kiggs"><span lang="en">Prefer KiGGS data</span></label>
+              <input type="radio" name="bp_prefer_radio" id="bp_radio_aha" value="aha"/>
+              <label for="bp_radio_aha"><span lang="en">Prefer AHA data</span></label>
+            
+            </fieldset>
+          </div>
+             <div class="bmi_flip_div">
+            <label for="dateInput_flip"><span lang="en">Método de data</span></label>
+            <select name="dateInput_flip" id="dateInput_flip" data-mini="true"  data-role="flipswitch" data-wrapper-class="custom-size-flipswitch">
+              <option value="desktop" lang="en">Desktop</option>
+              <option value="mobile" lang="en">Celular</option>
+            </select>
+          </div>
+          
+          
+        </div> 
+          
+        <div id="bp_result_day"> <span class="bpResultHeader"><span lang="en">Percentis de Pressão Arterial</span></span>
+          <table data-role="table" id="bpResultDayTable" data-mode="none">
+            <thead>
+              <tr class="bpResultFirstRow">
+                <th></th>
+                <th colspan="2"><span lang="en">Diurno</span></th>
+                <th colspan="2"><span lang="en">Noturno</span><br><small>(90% <span lang="en">Diurno</span>)</small></th>
+              </tr>
+              <tr>
+                <th></th>
+                <th>Sis</th>
+                <th>Dia</th>
+                <th>Sis</th>
+                <th>Dia</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>5 P.</th>
+                <td><div id="daySys5"></div></td>
+                <td><div id="dayDia5"></div></td>
+                <td><div id="nightSys5"></div></td>
+                <td><div id="nightDia5"></div></td>
+              </tr>
+               <tr>
+                <th>50 P.</th>
+                <td><div id="daySys50"></div></td>
+                <td><div id="dayDia50"></div></td>
+                <td><div id="nightSys50"></div></td>
+                <td><div id="nightDia50"></div></td>
+              </tr>
+              <tr>
+                <th>90 P.</th>
+                <td><div id="daySys90"></div></td>
+                <td><div id="dayDia90"></div></td>
+                <td><div id="nightSys90"></div></td>
+                <td><div id="nightDia90"></div></td>
+              </tr>
+              <tr>
+                <th>95 P.</th>
+                <td><div id="daySys95"></div></td>
+                <td><div id="dayDia95"></div></td>
+                <td><div id="nightSys95"></div></td>
+                <td><div id="nightDia95"></div></td>
+              </tr>
+                    <tr>
+                <th>99 P.</th>
+                <td><div id="daySys99"></div></td>
+                <td><div id="dayDia99"></div></td>
+                <td><div id="nightSys99"></div></td>
+                <td><div id="nightDia99"></div></td>
+              </tr>
+               <tr>
+                <th>99 P.+5</th>
+                <td><div id="daySys99plus"></div></td>
+                <td><div id="dayDia99plus"></div></td>
+                <td><div id="nightSys99plus"></div></td>
+                <td><div id="nightDia99plus"></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"></div>
+       <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Percentis de Pressão Arterial para Criança e Adolescentes de acordo com</span>:
+          
+          <ul>
+            <li>KiGGS study RKI 2013</li>
+<li>AHA 4. Task Force Report 2005</li>
+          </ul>
+          </p>
+          <p><span lang="en">Escolha os parâmetros nas <b>Opções</b></span></p>
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+<!-- InstanceEnd -->
+<!-- Mirrored from pedz.de/de/bp.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:40 GMT -->
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from pedz.de/de/perfusor.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:43 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" --> 
+
+<!-----------------------------------
+Perfusor Rechner
+------------------------------------->
+<div data-role="page" id="perfusor" data-theme="a"> 
+  <script type="text/javascript" src="js/perfusor.js"></script> 
+  <script type="text/javascript">
+<!--
+ 	$( document ).delegate("#perfusor", "pagebeforecreate", function() {
+		$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+		// Workaround
+	
+$("#perfusor_solveto").append('<option value="dosage" selected="selected">' + window.lang.convert("Dose") + '</option>');
+// Workaround end
+});
+-->
+</script>
+   <div data-role="header" data-theme="a">
+<h1 lang="en">Perfusor</h1>
+  </div>
+  <div data-role="content" data-theme="a" >
+  <div class="bodyWrapper">
+    <form name="perfusor_form" id="perfusor_form" action="#" method="post">
+   <div class="perfusorDiv">
+          <label for="perfusor_weight"><span lang="en">Peso</span></label>
+          <input type="number"    onKeyUp="perfusor_calc()" maxlength="4" name="perfusor_weight" id="perfusor_weight" value=""  />
+        </div>
+        <div class="perfusorDiv">
+          <label for="perfusor_weight"><span lang="en">Substância</span></label>
+          <input type="number" onKeyUp="perfusor_calc()" maxlength="6"  name="perfusor_substance" id="perfusor_substance" value="" />
+        </div>
+        <div class="perfusorDiv">
+          <label for="perfusor_solved"><span lang="en">Dissolvido em</span></label>
+          <select name="perfusor_solved" id="perfusor_solved" data-icon="false" onChange="perfusor_calc()"  data-mini="true">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="25">25</option>
+            <option selected value="50">50</option>
+            <option value="100">100</option>
+            <option value="500">500</option>
+          </select>
+        </div>
+        <div class="perfusorDiv">
+          <label for="perfusor_speed"><span lang="en">Taxa</span></label>
+          <input type="number" onKeyUp="perfusor_calc()" maxlength="4" name="perfusor_speed" id="perfusor_speed" value=""  />
+        </div>
+        <div class="perfusorDiv">
+          <label for="perfusor_dose"><span lang="en">Dose</span></label>
+          <input type="number" onKeyUp="perfusor_calc()" maxlength="6"  name="perfusor_dose" id="perfusor_dose" value="" />
+        </div>
+        <div class="perfusorDiv">
+          <label for="perfusor_timespan"><span lang="en">por</span></label>
+          <select name="perfusor_timespan" id="perfusor_timespan" data-icon="false" onChange="perfusor_calc()"  data-mini="true">
+            <option value="min">min</option>
+            <option selected value="h">h</option>
+            <option value="d">d</option>
+          </select>
+        </div>
+   
+      <div data-role="fieldcontain" >
+        <label for="perfusor_solveto"><span lang="en">Dissolvido em</span></label>
+        <select name="perfusor_solveto" id="perfusor_solveto" data-inline="true" onChange="perfusor_calc()" data-mini="true">
+          <option value="substance" lang="en">Substância</option>
+          <option value="speed" lang="en">Taxa</option>
+        
+        </select>
+      </div>
+      <a href="#" class="ui-btn ui-icon-delete ui-btn-icon-left ui-mini ui-corner-all ui-shadow" onclick="perfusorClearAll()"><span lang="en">Limpar Tudo</span></a>
+       
+    </form>
+  </div>
+  </div>
+  
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"></div>
+         <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Calculadora para Bomba de Infusão. Exemplos</span>:
+          
+          <ul>
+            <li><span lang="en">Dosagem da Droga que o paciente vai receber</span></li>
+<li><span lang="en">Qual a taxa de infusão é necessária para aplicar a dose indicada</span></li>
+<li><span lang="en">Qual a concentração da substância ativa/ingrediente deve conter a seringa para que num ritmo de infusão de 1ml/h o paciente receba 0.1/h do princípio ativo</span></li>
+          </ul>
+          </p>
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-----------------------------------
+Ende: Perfusor Rechner
+-------------------------------------> 
+
+
+</body>
+<!-- InstanceEnd -->
+
+</html>

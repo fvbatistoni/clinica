@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from pedz.de/de/fetal.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:42 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" --> 
+
+<!-----------------------------------
+Nieren Perzentilen
+------------------------------------->
+<div data-role="page" id="fetal" data-theme="a"> 
+ <script type="text/javascript" src="js/z-values.js"></script> </script> 
+  <script type="text/javascript" src="js/fetal.js"></script> </script> 
+   
+  <script type="text/javascript">
+<!--
+ $( document ).delegate("#fetal", "pagebeforecreate", function() {
+		$().ready(function() {
+		window.lang.run();
+	});
+
+	changeLanguage(window.lang);	
+	// Workaround
+	$("#fetalSelect").append('<option value="diaphysis" selected="selected">' + window.lang.convert("Comprimento da Diáfise femural") + '</option>');
+// Workaround end
+	setStrings();
+});
+
+
+
+-->
+</script>
+    <div data-role="header" data-theme="a">
+<h1 lang="en">ECO Fetal</h1>
+  </div>
+  <div data-role="content" data-theme="a" >
+    <div class="bodyWrapper">
+      <form name="fetal_form" id="fetal_form" action="#" method="post">
+   <div class="inputBox">
+            <label for="fetal_diaphysis"><span lang="en">Comprimento da Diáfise Femural</span></label>
+            <input type="number" placeholder="mm" id="fetal_diaphysis" onKeyUp="fetal_calc()"   maxlength="4"   name="fetal_diaphysis"></div> <div class="inputBox">          
+            <label for="fetal_menstrual"><span lang="en">DUM</span> (semanas)</label>
+            <input type="number" placeholder="semanas" id="fetal_menstrual" onKeyUp="fetal_calc()"   maxlength="4"   name="fetal_menstrual"></div>
+                   <div class="inputBox">
+            <label for="fetal_biparietal"><span lang="en">Diâmeto Biparietal</span> (mm)</label>
+            <input type="number" placeholder="mm" id="fetal_biparietal" onKeyUp="fetal_calc()"   maxlength="4"   name="fetal_biparietal"></div>
+      
+        <label for="fetalSelect" lang="en">Correlacionar com</label>
+        <select name="fetalSelect" id="fetalSelect" onChange="fetal_calc()" data-mini="true">
+          <option value="menstrual" lang="en">DUM</option>
+          <option value="biparietal" lang="en">Diâmetro Biparietal</option>
+        </select>
+          <ul class="zs-list">
+          <li id="li-aov">
+            <div class="zs-box-left">
+              <label for="fetal_aov"><span lang="en">Valva Aórtica</span></label>
+              <input type="number" placeholder="mm" data-mini="true" onKeyUp="fetal_calc()" maxlength="6"  name="fetal_aov" id="fetal_aov" value=""  />
+            </div>
+            <div class="zs-box-right"> <a href="#popupAov" id="btnAov" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupAov" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorAov" class="infoError"></div></p>
+              <div id="infoAov" class="zscoreinfo"></div>     
+            </div>
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="fetal_aov_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="fetal_aov_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="fetal_aov_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="sds_aov"></div>
+                    </div>
+                    <div class="zs-result-perc-value">
+                      <div id="percentile_aov"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+         <li id="li-pv">
+            <div class="zs-box-left">
+              <label for="fetal_pv"><span lang="en">Valva Pulmonar</span></label>
+              <input type="number" placeholder="mm" data-mini="true" onKeyUp="fetal_calc()" maxlength="6"  name="fetal_pv" id="fetal_pv" value=""  />
+            </div>
+            <div class="zs-box-right"> <a href="#popupPv" id="btnPv" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupPv" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorPv" class="infoError"></div></p>
+              <div id="infoPv" class="zscoreinfo"></div>     
+            </div>
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="fetal_pv_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="fetal_pv_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="fetal_pv_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="sds_pv"></div>
+                    </div>
+                    <div class="zs-result-perc-value">
+                      <div id="percentile_pv"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+          <li id="li-lvedd">
+            <div class="zs-box-left">
+              <label for="fetal_lvedd"><span lang="en">LVEDD</span></label>
+              <input type="number" placeholder="mm" data-mini="true" onKeyUp="fetal_calc()" maxlength="6"  name="fetal_lvedd" id="fetal_lvedd" value=""  />
+            </div>
+            <div class="zs-box-right"> <a href="#popupLvedd" id="btnLvedd" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupLvedd" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorLvedd" class="infoError"></div></p>
+              <div id="infoLvedd" class="zscoreinfo"></div>     
+            </div>
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="fetal_lvedd_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="fetal_lvedd_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="fetal_lvedd_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="sds_lvedd"></div>
+                    </div>
+                    <div class="zs-result-perc-value">
+                      <div id="percentile_lvedd"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+               <li id="li-rvedd">
+            <div class="zs-box-left">
+              <label for="fetal_rvedd"><span lang="en">RVEDD</span></label>
+              <input type="number" placeholder="mm" data-mini="true" onKeyUp="fetal_calc()" maxlength="6"  name="fetal_rvedd" id="fetal_rvedd" value=""  />
+            </div>
+            <div class="zs-box-right"> <a href="#popupRvedd" id="btnRvedd" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupRvedd" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorRvedd" class="infoError"></div></p>
+              <div id="infoRvedd" class="zscoreinfo"></div>     
+            </div>
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="fetal_rvedd_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="fetal_rvedd_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="fetal_rvedd_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="sds_rvedd"></div>
+                    </div>
+                    <div class="zs-result-perc-value">
+                      <div id="percentile_rvedd"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+               <li id="li-cc">
+            <div class="zs-box-left">
+              <label for="fetal_cc"><span lang="en">Circunferência Cardíaca</span></label>
+              <input type="number" placeholder="mm" data-mini="true" onKeyUp="fetal_calc()" maxlength="6"  name="fetal_cc" id="fetal_cc" value=""  />
+            </div>
+            <div class="zs-box-right"> <a href="#popupCc" id="btnCc" data-rel="popup" class="ui-btn ui-corner-all mmodeInfoButton ui-shadow ui-icon-info ui-btn-icon-notext" data-transition="pop" data-theme="b">Info</a> </div>
+            <div data-role="popup" id="popupCc" class="ui-content" data-theme="a" style="max-width:350px;">
+              <p class="zscoreinfo"><div id="errorCc" class="infoError"></div></p>
+              <div id="infoCc" class="zscoreinfo"></div>     
+            </div>
+            <div class="zs-box-center">
+              <div class="zs-diagram">
+                <div class="zs-baseline">
+                  <div class="zs-lln-marker">
+                    <div class="zs-lln-value">
+                      <div id="fetal_cc_lln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-uln-marker">
+                    <div class="zs-uln-value">
+                      <div id="fetal_cc_uln"></div>
+                    </div>
+                  </div>
+                  <div class="zs-mean-marker">
+                    <div class="zs-mean-value">
+                      <div id="fetal_cc_mean"></div>
+                    </div>
+                  </div>
+                  <div class="zs-result-marker">
+                    <div class="zs-result-value">
+                      <div id="sds_cc"></div>
+                    </div>
+                    <div class="zs-result-perc-value">
+                      <div id="percentile_cc"></div>
+                    </div>
+                  </div>
+                  <div class="zs-arrow-left"></div>
+                  <div class="zs-arrow-right"></div>
+                </div>
+              </div>
+            </div>
+            <div class="clearboth"></div>
+          </li>
+          
+ </ul>
+      </form>
+    </div>
+  </div>
+  
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"></div>
+          <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Ecocardiografia Fetal z-scores de acordo com</span>:
+              <ul>
+            <li>Lee: Fetal echocardiography: z-score reference ranges for a large
+      patient population, Ultrasound Obstet Gynecol 2010; 35: 28–34</li>
+          </ul>
+          </p>
+        
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+</body>
+<!-- InstanceEnd -->
+
+</html>

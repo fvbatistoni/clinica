@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from pedz.de/de/ecg.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:40 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" --> 
+
+
+<!-----------------------------------
+EKG Normwerte
+------------------------------------->
+<div data-role="page" id="ecg" data-theme="a">
+
+	<link href="mobiscroll.custom-2.5.0.min.css" rel="stylesheet" type="text/css" />
+	<script src="mobiscroll.custom-2.5.0.min.js" type="text/javascript"></script>   
+    <script src="mobiscroll.i18n.de.js" type="text/javascript"></script>    
+
+ <script type="text/javascript" src="js/ecg.js"></script> 
+
+  <script type="text/javascript">
+<!--
+$(document).delegate("#ecg", "pagebeforecreate", function() {
+	$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+});
+
+$(function() {
+	var browserLang = getBrowserLanguage();
+
+	$('#ecg_birthday').mobiscroll().date({
+		theme: 'ios',
+		display: 'modal',
+		mode: 'scroller',
+		lang: browserLang,
+		dateOrder: 'ddMMyy',
+		onClose: function(html, inst) {
+			$("#ecg_birthday").val(html);
+			ecg_calc();
+		}
+	});
+});
+
+-->
+</script>
+   <div data-role="header" data-theme="a">
+<h1 lang="en">ECG - Eletrocardiograma</h1>
+  </div>
+  <div data-role="content" data-theme="a" >
+  
+  <div class="bodyWrapper">
+    <form name="ecg_form" id="ecg_form" action="#" method="post">
+ <table class="resultTable">
+<colgroup>
+<col class="resultTableLabel">
+<col>
+</colgroup>
+ <tr><td>
+          <label for="ecg_birthday"><span lang="en">Data de Nascimento</span></label></td><td>
+ <input name="ecg_birthday" id="ecg_birthday" >
+      </td></tr><tr><td>
+          <label for="ecg_hr"><span lang="en">Frequência Cardíaca</span></label></td><td>
+          <input type="number" placeholder="bpm" onKeyUp="ecg_calc()" maxlength="3"  name="ecg_hr" id="ecg_hr" value=""  /></td></tr>
+    </table> 
+     
+     <div id="ecgResult">
+     <table data-role="table" data-mode="none">
+     <thead>
+     <tr>
+     <th></th>
+     <th>-2 SD</th>
+     <th>M</th>
+     <th>2 SD</th>
+     </tr>
+     </thead>
+     <tbody>
+     <tr>
+     <th><span lang="en">Frequência Cardíaca</span></th>
+<td><div id="rateLow"></div></td>     
+<td><div id="rateMean"></div></td>     
+<td><div id="rateHigh"></div></td>  
+</tr>
+     <tr>
+     <th><span lang="en">Intervalo QRS</span></th>
+<td><div id="qrsLow"></div></td>     
+<td><div id="qrsMean"></div></td>     
+<td><div id="qrsHigh"></div></td>  
+</tr>
+     <tr>
+     <th><span lang="en">Intervalo PQ</span></tb>
+<td><div id="pqLow"></div></td>     
+<td><div id="pqMean"></div></td>     
+<td><div id="pqHigh"></div></td>  
+</tr>
+     <tr>
+     <th>Q em III</th>
+<td><div id="qIIILow"></div></td>     
+<td><div id="qIIIMean"></div></td>     
+<td><div id="qIIIHigh"></div></td>  
+</tr>
+     <tr>
+     <th>Q em avF</th>
+<td><div id="qavfLow"></div></td>     
+<td><div id="qavfMean"></div></td>     
+<td><div id="qavfHigh"></div></td>  
+</tr>
+     <tr>
+     <th>Q em V5</th>
+<td><div id="qv5Low"></div></td>     
+<td><div id="qv5Mean"></div></td>     
+<td><div id="qv5High"></div></td>  
+</tr>
+     <tr>
+     <th>Q in V6</th>
+<td><div id="qv6Low"></div></td>     
+<td><div id="qv6Mean"></div></td>     
+<td><div id="qv6High"></div></td>  
+</tr>
+</tbody>
+</table>
+
+
+
+
+     
+     </div>
+      <div id="ecg_result"></div>
+     
+    </form>
+  </div>
+  </div>
+  
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"></div>
+        <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Valores normais de ECG de acordo com</span>
+          
+          <ul>
+            <li>Park MK und Guntheroth WG: "How to Read Pediatric ECG's", Mosby Elsevier 2006</li>
+          </ul>
+          </p>
+         
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-----------------------------------
+Ende: EKG Normwerte
+------------------------------------->
+
+
+</body>
+<!-- InstanceEnd -->
+<!-- Mirrored from pedz.de/de/ecg.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:40 GMT -->
+</html>

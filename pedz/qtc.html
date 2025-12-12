@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from pedz.de/de/qtc.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:35 GMT -->
+<head>
+<meta charset="utf-8" />
+<title>Ped(z)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+<!--
+.ui-footer.ui-bar {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+-->
+</style>
+<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+<!--
+// Chrome AJAX Fix
+ $(document).bind('mobileinit',function(){
+        $.mobile.pushStateEnabled = false;
+    });
+
+// Detect iOS System (because we can use smoother page transitions
+var agent = navigator.userAgent.toLowerCase();
+
+if ((agent.search('iphone') > -1)  ||
+(agent.search('ipod') > -1) ||
+(agent.search('ipad') > -1))
+{
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'slide';
+});
+}
+else {
+	$(document).bind("mobileinit", function(){
+  $.mobile.defaultPageTransition = 'none';
+}); }
+
+
+
+//-->
+</script>
+ 
+  <link rel="stylesheet" href="jquery.mobile.icons.min.css" />
+<script src="jquery.mobile-1.4.5.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="jquery.mobile-1.4.5.min.css" />
+ <link rel="stylesheet" href="Pedz.min.css" />
+<script src="jquery-lang.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/de.js" charset="utf-8" type="text/javascript"></script>
+<script src="langpack/es.js" charset="utf-8" type="text/javascript"></script>
+<script src="js/common.js" type="text/javascript"></script>
+<link href="rechner.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function changeLanguage() {
+	window.lang = new jquery_lang_js();
+	$().ready(function() {
+		window.lang.run();
+		
+		// Some Android devices won't show a decimal separator (. or ,) when using a html input type=number. Using type=tel is an (ugly) workaround
+		if (agent.search('android') > -1) {
+$('input[type=number]').each(function() { $(this).prop('type', 'tel'); });
+}
+	});
+
+var lang_short = getBrowserLanguage();
+if (lang_short == 'de')
+		window.lang.change('de');
+else if (lang_short == 'es')
+	window.lang.change('es');
+}
+
+
+
+
+</script>
+</head>
+
+<body>
+<!-- InstanceBeginEditable name="pageContent" --> 
+<!-- 
+Der QTC-Rechner
+-->
+
+<div data-role="page" id="qtc" data-theme="a"> 
+
+ <script type="text/javascript" src="js/qtc.js"></script>
+ 
+  <script type="text/javascript">
+<!--
+$(document).delegate("#qtc", "pagebeforecreate", function() {
+	$().ready(function() {
+		window.lang.run();
+	});
+	changeLanguage(window.lang);
+$("#qtc_radio").find("input[type='radio']").bind("change", function() {
+	qtc_switch_hf_rr();
+});
+});
+
+-->
+</script>
+   <div data-role="header" data-theme="a">
+<h1 lang="en">Calculadora QTc</h1>
+  </div>
+  <div data-role="content" data-theme="a" >
+  
+  <div class="bodyWrapper">
+    <form name="qtc_form" id="qtc_form" action="#" method="post">
+      <fieldset data-role="controlgroup" id="qtc_radio" data-type="horizontal" >
+        <input type="radio" name="qtc_radio" id="qtc_radio_hf" value="hf" checked="checked" />
+        <label for="qtc_radio_hf"><span lang="en">Frequência Cardíaca</span></label>
+        <input type="radio" name="qtc_radio" id="qtc_radio_rr" value="rr"  />
+        <label for="qtc_radio_rr"><span lang="en">Intervalo-RR</span></label>
+      </fieldset>
+ <table class="resultTableSmall">
+<colgroup>
+<col class="resultTableLabel">
+<col>
+</colgroup>
+<tr><td>
+          <label for="qtc_qt"><span lang="en">QT</span></label>
+</td><td>
+          <input type="number"  placeholder="msec" onKeyUp="qtc_calc()" maxlength="3"  name="qtc_qt" id="qtc_qt" value=""  />
+</td></tr><tr id="tablerow_hf"><td>
+          <label for="qtc_hf"><span lang="en">FC</span></label>
+</td><td>
+          <input type="number" placeholder="bpm" onKeyUp="qtc_calc()" maxlength="3"  name="qtc_hf"  id="qtc_hf" value="" />
+</td></tr><tr id="tablerow_rr"style="display:none; visibility:hidden;" ><td>
+          <label for="qtc_rr"><span lang="en">RR</span></label>
+</td><td>
+          <input type="number"  placeholder="msec"  onKeyUp="qtc_calc()" maxlength="4" name="qtc_rr" disabled="disabled" id="qtc_rr"  value="" />
+</td></tr></table>
+<div class="resultDiv">
+          <span lang="en">QTc (msec)</span>:
+          <div id="qtc_qtc" style="font-weight:bold"></div>
+</div>
+    </form>
+  </div>
+  </div>
+  
+  <div data-role="footer" class="ui-bar"  data-theme="a">
+    <div class="ui-grid-b">
+      <div class="ui-block-a"></div>
+      <div class="ui-block-b"></div>
+          <div class="ui-block-c"> <a href="#info" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-info ui-btn-icon-left">Info</a></div>
+      <div data-role="popup" id="info" style="max-width:400px;">
+        <div data-role="header">
+          <h1>Info</h1>
+        </div>
+        <div role="main" class="ui-content">
+          <p><span lang="en">Intervalo QTc de acordo com Bazett (1980)</span>:</p>
+          <a href="#" class="ui-btn ui-corner-all ui-shadow ui-mini ui-icon-delete ui-btn-icon-left" data-mini="true" data-rel="back"><span lang="en">Fechar</span></a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--
+Ende: Qtc
+--> 
+
+
+</body>
+<!-- InstanceEnd -->
+<!-- Mirrored from pedz.de/de/qtc.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 06 Jun 2019 10:27:38 GMT -->
+</html>

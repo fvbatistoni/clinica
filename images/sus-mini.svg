@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="47.384319"
+   height="20"
+   viewBox="0 0 47.384319 20"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="SUS_apenas_preenchimento.svg"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1" />
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="2.084375"
+     inkscape:cx="315.2024"
+     inkscape:cy="51.574213"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
+  <path
+     id="sus-logo-text"
+     fill="#2857ab"
+     d="M 40.496778,12.16539 36.88735,11.10053 C 34.544185,10.35338 32.970224,8.14205 32.970224,5.70398 32.970224,2.52051 35.502748,0 38.69799,0 h 7.088664 v 2.52051 h -4.982177 c -0.958564,0 -1.798788,0.72995 -1.798788,1.79913 0,0.63549 0.413928,1.38434 1.17154,1.58529 l 3.491087,1.17223 c 2.437887,0.74714 3.716002,3.17146 3.716002,5.92812 0,3.50293 -2.875691,6.36694 -6.366865,6.36694 h -7.526554 v -2.86401 h 6.461502 c 0.958564,0 2.023616,-0.94636 2.023616,-2.22421 0,-0.9584 -0.532442,-1.79913 -1.479239,-2.11861 m -33.088565,0 -3.597576,-1.06486 C 1.5858114,10.35338 0,8.14205 0,5.70398 0,2.52051 2.544375,0 5.727764,0 H 12.82828 V 2.52051 H 7.846103 c -0.958563,0 -1.798788,0.72995 -1.798788,1.79913 0,0.63549 0.425952,1.38434 1.159774,1.58529 l 3.502939,1.17223 c 2.331313,0.74714 3.597575,3.17146 3.597575,5.92812 0,3.50293 -2.745498,6.36694 -6.248439,6.36694 H 0.5443767 V 16.50821 H 7.005879 c 0.946711,0 1.999998,-0.94636 1.999998,-2.22421 0,-0.9584 -0.638928,-1.79913 -1.597664,-2.11861 M 23.846008,20 c -4.343165,0 -7.739615,-3.07699 -7.739615,-6.88823 V 0.10649 h 5.834339 v 13.53773 c 0,1.70466 1.479239,3.0658 3.384515,3.0658 1.798788,0 3.39645,-1.36114 3.39645,-3.0658 V 0.10649 h 2.757352 V 13.11177 C 31.479049,16.92301 28.082683,20 23.846008,20"
+     style="stroke-width:0.176011;fill:#000000" />
+</svg>
