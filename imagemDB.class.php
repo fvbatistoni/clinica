@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * DB Class
  * This class is used for database related (connect, insert, update, and delete) operations
@@ -6,7 +7,7 @@
  * @url		http://www.codexworld.com
  * @license	http://www.codexworld.com/license
  */
-include '../ee-config.php';
+require_once __DIR__ . '/ee-config.php';
 class imagemDB{
 	private $dbHost     = DB_HOST;
 	private $dbUsername = DB_USER;
@@ -57,10 +58,11 @@ class imagemDB{
 		}elseif(!array_key_exists("start",$conditions) && array_key_exists("limit",$conditions)){
 			$sql .= ' LIMIT '.$conditions['limit']; 
 		}
-		
-		$result = $this->db->query($sql);
-		
-		if(array_key_exists("return_type",$conditions) && $conditions['return_type'] != 'all'){
+                $result = $this->db->query($sql);
+
+                $data = [];
+
+                if(array_key_exists("return_type",$conditions) && $conditions['return_type'] != 'all'){
 			switch($conditions['return_type']){
 				case 'count':
 					$data = $result->num_rows;
