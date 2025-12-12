@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 /*
  * DB Class
  * This class is used for database related (connect, insert, update, and delete) operations
@@ -6,7 +7,7 @@
  * @url        http://www.codexworld.com
  * @license    http://www.codexworld.com/license
  */
-include '../ee-config.php';
+require_once __DIR__ . '/ee-config.php';
 
 class DB {    
     private $dbHost     = DB_HOST;
@@ -148,6 +149,8 @@ class DB {
         }
 
         $result = $this->db->query($sql);
+
+        $data = [];
 
         if(array_key_exists("return_type", $conditions) && $conditions['return_type'] != 'all'){
             switch($conditions['return_type']){
